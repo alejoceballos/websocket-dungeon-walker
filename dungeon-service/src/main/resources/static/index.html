@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dungeon</title>
+    <link href="/dungeon.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/dungeon.js"></script>
+</head>
+<body onload="start()">
+<p id="p-message"></p>
+<table class="table--grid">
+    <thead id="dungeon-header">
+    <tr>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody id="dungeon-body">
+    </tbody>
+</table>
+</body>
+</html>

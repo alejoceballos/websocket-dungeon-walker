@@ -1,0 +1,13 @@
+table.table--grid {
+    border-spacing: 1px;
+}
+
+table.table--grid th, table.table--grid td {
+    width: 15px;
+    text-align: center;
+}
+
+table.table--grid td {
+    border: 1px solid black;
+    padding: 2px;
+}
