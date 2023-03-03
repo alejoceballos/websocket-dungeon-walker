@@ -21,7 +21,7 @@ const start = () => {
 }
 
 const createDungeon = dungeonMap => {
-    const {width, height} = dungeonMap;
+    const {width, height, walls} = dungeonMap;
 
     for (let idx = 0; idx < height; idx++) {
         $("#dungeon-header>tr").append(`<th>${idx}</th>`);
@@ -37,8 +37,12 @@ const createDungeon = dungeonMap => {
         tr.append(`<td>${y}</td>`);
 
         for (let x = 0; x < height; x++) {
-            const content = isLimit(x, y, width, height) ? "W" : "";
-            tr.append(`<td id='${getTdId(x, y)}'>${content}</td>`);
+            tr.append(`<td id='${getTdId(x, y)}'></td>`);
+        }
+
+        for (const wall of walls) {
+            const {x, y} = wall;
+            $(`#${getTdId(x, y)}`).html("W");
         }
     }
 }
@@ -66,8 +70,3 @@ const reRender = walker => {
 const getTdId = (x, y) => `coord-${x}-${y}`;
 
 const setMessage = msg => $("#p-message").text(msg);
-
-const isLimit = (x, y, width, height) => x === 0
-    || x === width - 1
-    || y === 0
-    || y === height - 1;

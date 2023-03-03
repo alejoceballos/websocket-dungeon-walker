@@ -44,3 +44,38 @@ dungeon:
       y: 3
       speed: 900
       direction: S
+    - id: H
+      x: 3
+      y: 4
+      speed: 300
+      direction: N
+    - id: I
+      x: 8
+      y: 4
+      speed: 400
+      direction: NE
+    - id: J
+      x: 13
+      y: 4
+      speed: 500
+      direction: NW
+    - id: K
+      x: 18
+      y: 4
+      speed: 600
+      direction: N
+    - id: L
+      x: 21
+      y: 4
+      speed: 700
+      direction: NE
+    - id: M
+      x: 24
+      y: 4
+      speed: 800
+      direction: NW
+    - id: N
+      x: 27
+      y: 4
+      speed: 900
+      direction: N

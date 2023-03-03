@@ -1,7 +1,7 @@
-package com.momo2x.dungeon.comm.controller;
+package com.momo2x.dungeon.communication.controller;
 
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
-import com.momo2x.dungeon.comm.model.WalkerMapper;
+import com.momo2x.dungeon.communication.model.WalkerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.momo2x.dungeon.engine;
 
-import com.momo2x.dungeon.comm.controller.DungeonUpdater;
+import com.momo2x.dungeon.communication.controller.DungeonUpdater;
 import com.momo2x.dungeon.config.DungeonProperties;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
@@ -23,16 +23,17 @@ public class DungeonEngine {
 
     private final DungeonProperties properties;
 
+    private final DungeonMap map;
+
     private final DungeonUpdater updater;
 
     private List<MovementManager> managers;
 
     public void init() {
-        final DungeonMap map = new DungeonMap(properties.getWidth(), properties.getHeight());
-        map.init();
-        log.info("Map created (w: {}, h: {})", properties.getWidth(), properties.getHeight());
+        this.map.init();
+        log.info("Map created (w: {}, h: {})", this.map.getWidth(), this.map.getHeight());
 
-        managers = properties.getElements().stream().map(elem -> {
+        managers = this.properties.getElements().stream().map(elem -> {
             final var walker = new DungeonWalker(
                     elem.id(),
                     true,
@@ -40,11 +41,11 @@ public class DungeonEngine {
 
             log.info("Walker {} created", walker.getId());
 
-            final var bounce = new SimpleBounceStrategy(map, walker);
+            final var bounce = new SimpleBounceStrategy(this.map, walker);
 
             log.info("Bounce strategy for {} is {}", walker.getId(), bounce.getClass().getSimpleName());
 
-            final var manager = new MovementManager(map, walker, bounce);
+            final var manager = new MovementManager(this.map, walker, bounce);
 
             log.info("Walker manager for {} created", walker.getId());
 
@@ -63,14 +64,14 @@ public class DungeonEngine {
     public void run() throws InterruptedException {
         Thread.sleep(5000);
 
-        managers.forEach(manager -> Executors.newFixedThreadPool(managers.size()).submit(() -> {
+        this.managers.forEach(manager -> Executors.newFixedThreadPool(this.managers.size()).submit(() -> {
             try {
                 log.info("Walker {} started moving", manager.getWalker().getId());
 
                 while (true) {
                     Thread.sleep(500);
                     manager.move();
-                    updater.update(manager.getWalker());
+                    this.updater.update(manager.getWalker());
                 }
             } catch (Exception e) {
                 e.printStackTrace(System.out);

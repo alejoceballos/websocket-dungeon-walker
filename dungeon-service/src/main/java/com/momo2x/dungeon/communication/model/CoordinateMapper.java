@@ -1,4 +1,4 @@
-package com.momo2x.dungeon.comm.model;
+package com.momo2x.dungeon.communication.model;
 
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import org.mapstruct.Mapper;

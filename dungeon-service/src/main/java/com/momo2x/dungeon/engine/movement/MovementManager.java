@@ -22,7 +22,7 @@ public class MovementManager {
         final var nextCoord = this.walker.getCell().getCoord().getCoordAt(this.walker.getDirection());
 
         final var currCell = this.walker.getCell();
-        final var nextCell = this.map.getCell(nextCoord);
+        final var nextCell = this.map.getCellAt(nextCoord);
 
         if (Objects.isNull(nextCell)) {
             throw new RuntimeException("Unmapped cell");
@@ -40,7 +40,7 @@ public class MovementManager {
     }
 
     public void enterMap(final DungeonCoord coord) {
-        final var cell = this.map.getCell(coord);
+        final var cell = this.map.getCellAt(coord);
 
         if (Objects.isNull(cell)) {
             throw new RuntimeException("Unmapped cell");

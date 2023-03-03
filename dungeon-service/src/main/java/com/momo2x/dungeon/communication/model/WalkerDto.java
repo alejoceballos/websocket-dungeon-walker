@@ -1,4 +1,4 @@
-package com.momo2x.dungeon.comm.model;
+package com.momo2x.dungeon.communication.model;
 
 public record WalkerDto(
         String id,

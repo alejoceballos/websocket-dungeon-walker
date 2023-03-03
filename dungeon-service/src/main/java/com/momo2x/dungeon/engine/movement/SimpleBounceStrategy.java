@@ -55,7 +55,7 @@ public class SimpleBounceStrategy implements BounceStrategy {
 
     private DungeonCell getCellByDirection(DungeonDirectionType direction) {
         final var coord = this.walker.getCoord().getCoordAt(direction);
-        return Optional.ofNullable(this.map.getCell(coord)).orElseGet(() -> new DungeonCell(coord));
+        return Optional.ofNullable(this.map.getCellAt(coord)).orElseGet(() -> new DungeonCell(coord));
     }
 
     private DungeonDirectionType calculateHalfBounceFromCell(DungeonCell cell01, DungeonCell cell02) {

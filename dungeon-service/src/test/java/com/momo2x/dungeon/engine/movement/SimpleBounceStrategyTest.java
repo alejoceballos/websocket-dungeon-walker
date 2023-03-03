@@ -93,10 +93,10 @@ class SimpleBounceStrategyTest {
         final var map = mock(DungeonMap.class);
 
         final var resultCell = new DungeonCell(bounceTo);
-        when(map.getCell(bounceTo)).thenReturn(resultCell);
+        when(map.getCellAt(bounceTo)).thenReturn(resultCell);
 
         for (var wallCoord : wallCoords) {
-            when(map.getCell(eq(wallCoord))).thenReturn(getWallCell(wallCoord));
+            when(map.getCellAt(eq(wallCoord))).thenReturn(getWallCell(wallCoord));
         }
 
         return new SimpleBounceStrategy(map, walker);
