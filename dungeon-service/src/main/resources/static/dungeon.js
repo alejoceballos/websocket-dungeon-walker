@@ -2,32 +2,31 @@ const STOMP_ENDPOINT = "/dungeon-ws";
 const REST_ENDPOINT = "/v1/dungeon";
 const SIMPLE_BROKER = "/dungeon";
 
-const socket = new SockJS(STOMP_ENDPOINT);
-
-stompClient = Stomp.over(socket);
-
 const start = () => {
+    const socket = new SockJS(STOMP_ENDPOINT);
+
     $.ajax({
         url: `${REST_ENDPOINT}/map`,
         type: "GET",
         dataType: "json",
         success: dungeonMap => {
             createDungeon(dungeonMap);
-            webSocketConnect(stompClient);
+            webSocketConnect(socket);
         },
-
         fail: () => setMessage("Encountered an error")
     });
+
+    return socket;
 }
 
 const createDungeon = dungeonMap => {
-    const {width, height, walls} = dungeonMap;
+    const {width, height, elements} = dungeonMap;
 
-    for (let idx = 0; idx < height; idx++) {
+    for (let idx = 0; idx < width; idx++) {
         $("#dungeon-header>tr").append(`<th>${idx}</th>`);
     }
 
-    for (let y = 0; y < width; y++) {
+    for (let y = 0; y < height; y++) {
         const rowId = `dungeon-row-${y}`;
 
         $("#dungeon-body").append(`<tr id='${rowId}'></tr>`);
@@ -36,35 +35,41 @@ const createDungeon = dungeonMap => {
 
         tr.append(`<td>${y}</td>`);
 
-        for (let x = 0; x < height; x++) {
+        for (let x = 0; x < width; x++) {
             tr.append(`<td id='${getTdId(x, y)}'></td>`);
         }
 
-        for (const wall of walls) {
-            const {x, y} = wall;
-            $(`#${getTdId(x, y)}`).html("W");
+        for (const element of elements) {
+            const {avatar, coord} = element;
+            const {x, y} = coord;
+
+            $(`#${getTdId(x, y)}`).html(avatar);
         }
     }
 }
 
-const webSocketConnect = stompClient => {
+const webSocketConnect = socket => {
+    const stompClient = Stomp.over(socket);
+
     stompClient.connect({}, frame => {
         console.log(frame);
         stompClient.subscribe(
             `/user${SIMPLE_BROKER}`,
             result => reRender(JSON.parse(result.body)));
     });
+
+    return stompClient;
 }
 
 const reRender = walker => {
-    const {id, previous, current} = walker;
+    const {id, avatar, previous, current} = walker;
     const previousId = getTdId(previous.x, previous.y)
     const currentId = getTdId(current.x, current.y)
 
     setMessage(`[${id}] From (${previous.x},${previous.y}) to (${current.x},${current.y})`);
 
     $(`#${previousId}`).html("");
-    $(`#${currentId}`).html(id);
+    $(`#${currentId}`).html(avatar);
 }
 
 const getTdId = (x, y) => `coord-${x}-${y}`;

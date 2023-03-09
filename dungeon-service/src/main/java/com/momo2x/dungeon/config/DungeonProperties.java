@@ -1,27 +1,20 @@
 package com.momo2x.dungeon.config;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @ConfigurationProperties(prefix = "dungeon")
 public class DungeonProperties {
 
-    @Value("${dungeon.map.width}")
+    @Value("${dungeon.map.map-file}")
     @Getter
-    private int width;
+    private String mapFile;
 
-    @Value("${dungeon.map.height}")
+    @Value("${dungeon.map.data-file}")
     @Getter
-    private int height;
-
-    @Getter
-    @Setter
-    private List<ElementProperties> elements;
+    private String dataFile;
 
 }

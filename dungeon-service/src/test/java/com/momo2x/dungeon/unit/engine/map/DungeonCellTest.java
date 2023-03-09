@@ -1,10 +1,11 @@
-package com.momo2x.dungeon.engine.map;
+package com.momo2x.dungeon.unit.engine.map;
 
 import com.momo2x.dungeon.engine.actors.DungeonElement;
+import com.momo2x.dungeon.engine.map.DungeonCell;
+import com.momo2x.dungeon.engine.map.DungeonCoord;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
 
 import java.util.stream.Stream;
 
@@ -15,18 +16,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class DungeonCellTest {
-
-    @ParameterizedTest
-    @MethodSource("isBlockedProperties")
-    void isBlocked(final DungeonCell cell, final boolean expected) {
-        assertThat(cell.isBlocked(), equalTo(expected));
-    }
-
-    @ParameterizedTest
-    @MethodSource("testToStringProperties")
-    void testToString(final DungeonCell cell, final String expected) {
-        assertThat(cell.toString(), equalTo(expected));
-    }
 
     private static Stream<Arguments> isBlockedProperties() {
         final var elementBlocked = mock(DungeonElement.class);
@@ -68,5 +57,17 @@ class DungeonCellTest {
                         new DungeonCell(coord, element),
                         expectedResult.formatted(expectedCoord, expectedElemId))
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isBlockedProperties")
+    void isBlocked(final DungeonCell cell, final boolean expected) {
+        assertThat(cell.isBlocked(), equalTo(expected));
+    }
+
+    @ParameterizedTest
+    @MethodSource("testToStringProperties")
+    void testToString(final DungeonCell cell, final String expected) {
+        assertThat(cell.toString(), equalTo(expected));
     }
 }

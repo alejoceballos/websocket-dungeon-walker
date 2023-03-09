@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class DungeonUpdater {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -18,3 +18,4 @@ public class DungeonUpdater {
         simpMessagingTemplate.convertAndSendToUser("test", "/dungeon", mapper.toDto(walker));
     }
 }
+

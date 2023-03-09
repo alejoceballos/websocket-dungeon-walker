@@ -9,7 +9,6 @@ import org.mapstruct.Mappings;
 public interface WalkerMapper {
 
     @Mappings({
-            @Mapping(source = "id", target = "id"),
             @Mapping(source = "previousCell.coord", target = "previous"),
             @Mapping(source = "cell.coord", target = "current")
     })

@@ -1,0 +1,17 @@
+{
+  "   ": {
+    "type": "empty"
+  },
+  "###": {
+    "type": "wall",
+    "blocker": true,
+    "avatar": "#"
+  },
+  "001": {
+    "type": "walker",
+    "blocker": true,
+    "avatar": "A",
+    "direction": "NE",
+    "bounce": "simple"
+  }
+}

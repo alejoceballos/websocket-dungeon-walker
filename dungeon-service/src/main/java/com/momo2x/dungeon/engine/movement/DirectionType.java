@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public enum DungeonDirectionType {
+public enum DirectionType {
     N("North", "S"),
     S("South", "N"),
     E("East", "W"),
@@ -15,17 +15,17 @@ public enum DungeonDirectionType {
     SE("Southeast", "NW"),
     SW("Southwest", "NE");
 
-    public static final List<DungeonDirectionType> NORTHERN = List.of(N, NE, NW);
-    public static final List<DungeonDirectionType> SOUTHERN = List.of(S, SE, SW);
-    public static final List<DungeonDirectionType> EASTERN = List.of(E, SE, NE);
-    public static final List<DungeonDirectionType> WESTERN = List.of(W, SW, NW);
+    public static final List<DirectionType> NORTHERN = List.of(N, NE, NW);
+    public static final List<DirectionType> SOUTHERN = List.of(S, SE, SW);
+    public static final List<DirectionType> EASTERN = List.of(E, SE, NE);
+    public static final List<DirectionType> WESTERN = List.of(W, SW, NW);
 
     private final String description;
 
     private final String opposite;
 
-    public DungeonDirectionType getOpposite() {
-        return DungeonDirectionType.valueOf(opposite);
+    public DirectionType getOpposite() {
+        return DirectionType.valueOf(opposite);
     }
 
     @Override

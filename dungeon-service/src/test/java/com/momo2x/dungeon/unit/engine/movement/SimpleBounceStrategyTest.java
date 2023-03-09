@@ -1,17 +1,21 @@
-package com.momo2x.dungeon.engine.movement;
+package com.momo2x.dungeon.unit.engine.movement;
 
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.actors.DungeonWall;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;
+import com.momo2x.dungeon.engine.movement.BounceStrategy;
+import com.momo2x.dungeon.engine.movement.DirectionType;
+import com.momo2x.dungeon.engine.movement.SimpleBounceStrategy;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.momo2x.dungeon.engine.movement.DungeonDirectionType.*;
+import static com.momo2x.dungeon.engine.movement.DirectionType.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.eq;
@@ -72,16 +76,16 @@ class SimpleBounceStrategyTest {
     @ParameterizedTest
     @MethodSource("bounceStrategyParameters")
     void bounce(
-            final DungeonDirectionType direction,
+            final DirectionType direction,
             final DungeonCoord bounceCoord,
-            final DungeonDirectionType bounceDirection,
+            final DirectionType bounceDirection,
             final DungeonCoord[] wallCoords) {
         final var strategy = createBounceStrategy(direction, bounceCoord, wallCoords);
-        assertThat(strategy.bounceDirection(), equalTo(bounceDirection));
+        MatcherAssert.assertThat(strategy.bounceDirection(), equalTo(bounceDirection));
     }
 
     private BounceStrategy createBounceStrategy(
-            DungeonDirectionType direction,
+            DirectionType direction,
             DungeonCoord bounceTo,
             DungeonCoord... wallCoords
     ) {
@@ -105,7 +109,7 @@ class SimpleBounceStrategyTest {
     private DungeonCell getWallCell(final DungeonCoord coord) {
         return DungeonCell.builder()
                 .coord(coord)
-                .element(new DungeonWall("", true))
+                .element(new DungeonWall("", "", true))
                 .build();
     }
 

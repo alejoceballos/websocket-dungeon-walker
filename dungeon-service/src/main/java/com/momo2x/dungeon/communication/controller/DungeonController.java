@@ -19,8 +19,7 @@ public class DungeonController {
 
     @GetMapping("/map")
     public MapDto getMap() {
-        final var map = mapper.toDto(service.getMap());
-        return map;
+        return mapper.toDto(service.getMap());
     }
 
 }

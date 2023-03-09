@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 import java.util.Random;
 
-import static com.momo2x.dungeon.engine.movement.DungeonDirectionType.*;
+import static com.momo2x.dungeon.engine.movement.DirectionType.*;
 
 @RequiredArgsConstructor
 public class SimpleBounceStrategy implements BounceStrategy {
@@ -20,7 +20,7 @@ public class SimpleBounceStrategy implements BounceStrategy {
     private final Random randomizer = new Random();
 
     @Override
-    public DungeonDirectionType bounceDirection() {
+    public DirectionType bounceDirection() {
         return switch (this.walker.getDirection()) {
             case SE -> calculateFullBounce(NE, SW, S, E);
             case NW -> calculateFullBounce(NE, SW, N, W);
@@ -30,11 +30,11 @@ public class SimpleBounceStrategy implements BounceStrategy {
         };
     }
 
-    private DungeonDirectionType calculateFullBounce(
-            DungeonDirectionType dir01,
-            DungeonDirectionType dir02,
-            DungeonDirectionType dir03,
-            DungeonDirectionType dir04) {
+    private DirectionType calculateFullBounce(
+            DirectionType dir01,
+            DirectionType dir02,
+            DirectionType dir03,
+            DirectionType dir04) {
 
         return Optional
                 .ofNullable(calculateHalfBounceFromDirection(dir01, dir02))
@@ -43,9 +43,9 @@ public class SimpleBounceStrategy implements BounceStrategy {
                         .orElseGet(() -> this.walker.getDirection().getOpposite()));
     }
 
-    private DungeonDirectionType calculateHalfBounceFromDirection(
-            DungeonDirectionType dir01,
-            DungeonDirectionType dir02) {
+    private DirectionType calculateHalfBounceFromDirection(
+            DirectionType dir01,
+            DirectionType dir02) {
         final var cell01 = getCellByDirection(dir01);
         final var cell02 = getCellByDirection(dir02);
 
@@ -53,12 +53,12 @@ public class SimpleBounceStrategy implements BounceStrategy {
 
     }
 
-    private DungeonCell getCellByDirection(DungeonDirectionType direction) {
+    private DungeonCell getCellByDirection(DirectionType direction) {
         final var coord = this.walker.getCoord().getCoordAt(direction);
         return Optional.ofNullable(this.map.getCellAt(coord)).orElseGet(() -> new DungeonCell(coord));
     }
 
-    private DungeonDirectionType calculateHalfBounceFromCell(DungeonCell cell01, DungeonCell cell02) {
+    private DirectionType calculateHalfBounceFromCell(DungeonCell cell01, DungeonCell cell02) {
         final var cells = randomizeCells(cell01, cell02);
 
         if (!cells[0].isBlocked()) {

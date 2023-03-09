@@ -1,64 +1,60 @@
 package com.momo2x.dungeon.engine;
 
 import com.momo2x.dungeon.communication.controller.DungeonUpdater;
-import com.momo2x.dungeon.config.DungeonProperties;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
-import com.momo2x.dungeon.engine.map.DungeonCoord;
-import com.momo2x.dungeon.engine.movement.DungeonDirectionType;
 import com.momo2x.dungeon.engine.map.DungeonMap;
+import com.momo2x.dungeon.engine.movement.BounceException;
+import com.momo2x.dungeon.engine.movement.BounceStrategy;
 import com.momo2x.dungeon.engine.movement.MovementManager;
 import com.momo2x.dungeon.engine.movement.SimpleBounceStrategy;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
+
+import static com.momo2x.dungeon.engine.movement.BounceStrategyType.SIMPLE;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class DungeonEngine {
 
-    private final DungeonProperties properties;
-
     private final DungeonMap map;
 
     private final DungeonUpdater updater;
 
-    private List<MovementManager> managers;
+    @Getter
+    private final List<MovementManager> managers = new ArrayList<>();
 
     public void init() {
-        this.map.init();
-        log.info("Map created (w: {}, h: {})", this.map.getWidth(), this.map.getHeight());
+        managers.addAll(this.map
+                .getWalkers().stream().map(walker -> {
+                    log.info(
+                            "Processing walker {} at {} going to {}",
+                            walker.getId(),
+                            walker.getCoord(),
+                            walker.getDirection());
 
-        managers = this.properties.getElements().stream().map(elem -> {
-            final var walker = new DungeonWalker(
-                    elem.id(),
-                    true,
-                    DungeonDirectionType.valueOf(elem.direction()));
+                    final BounceStrategy bounce;
 
-            log.info("Walker {} created", walker.getId());
+                    try {
+                        bounce = createStrategy(map, walker);
+                    } catch (BounceException e) {
+                        throw new RuntimeException(e);
+                    }
 
-            final var bounce = new SimpleBounceStrategy(this.map, walker);
+                    log.info("Bounce strategy for {} is {}", walker.getId(), bounce.getClass().getSimpleName());
 
-            log.info("Bounce strategy for {} is {}", walker.getId(), bounce.getClass().getSimpleName());
+                    final var manager = new MovementManager(this.map, walker, bounce);
 
-            final var manager = new MovementManager(this.map, walker, bounce);
+                    log.info("Walker manager for {} created", walker.getId());
 
-            log.info("Walker manager for {} created", walker.getId());
-
-            manager.enterMap(new DungeonCoord(elem.x(), elem.y()));
-
-            log.info(
-                    "Walker {} entered map at {} and it's ready to go {}",
-                    walker.getId(),
-                    walker.getCell().getCoord(),
-                    walker.getDirection());
-
-            return manager;
-        }).collect(Collectors.toList());
+                    return manager;
+                }).toList());
     }
 
     public void run() throws InterruptedException {
@@ -81,6 +77,14 @@ public class DungeonEngine {
                         manager.getWalker().getCoord());
             }
         }));
+    }
+
+    private BounceStrategy createStrategy(final DungeonMap map, final DungeonWalker walker) throws BounceException {
+        if (walker.getBounceStrategy() == SIMPLE) {
+            return new SimpleBounceStrategy(map, walker);
+        }
+
+        throw new BounceException("Unmapped bounce strategy");
     }
 
 }

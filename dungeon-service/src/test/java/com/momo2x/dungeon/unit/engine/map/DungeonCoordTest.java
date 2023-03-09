@@ -1,6 +1,7 @@
-package com.momo2x.dungeon.engine.map;
+package com.momo2x.dungeon.unit.engine.map;
 
-import com.momo2x.dungeon.engine.movement.DungeonDirectionType;
+import com.momo2x.dungeon.engine.map.DungeonCoord;
+import com.momo2x.dungeon.engine.movement.DirectionType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -8,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.momo2x.dungeon.engine.movement.DungeonDirectionType.*;
+import static com.momo2x.dungeon.engine.movement.DirectionType.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -27,27 +28,6 @@ class DungeonCoordTest {
      */
 
     private final DungeonCoord coord = new DungeonCoord(1, 1);
-
-    @ParameterizedTest
-    @MethodSource("getCoordAtParameters")
-    void getCoordAt(
-            final DungeonDirectionType direction,
-            final DungeonCoord expectedCoord) {
-        assertThat(coord.getCoordAt(direction), equalTo(expectedCoord));
-    }
-
-    @ParameterizedTest
-    @MethodSource("calculateDirectionParameters")
-    void calculateDirection(
-            final DungeonCoord coordTo,
-            final DungeonDirectionType expectedDirection) {
-        assertThat(coord.calculateDirection(coordTo), equalTo(expectedDirection));
-    }
-
-    @Test
-    void testToString() {
-        assertThat(new DungeonCoord(0, 0).toString(), equalTo("(0,0)"));
-    }
 
     private static Stream<Arguments> getCoordAtParameters() {
         return Stream.of(
@@ -71,6 +51,27 @@ class DungeonCoordTest {
                 arguments(new DungeonCoord(0, 1), W),
                 arguments(new DungeonCoord(0, 0), NW),
                 arguments(new DungeonCoord(1, 0), N));
+    }
+
+    @ParameterizedTest
+    @MethodSource("getCoordAtParameters")
+    void getCoordAt(
+            final DirectionType direction,
+            final DungeonCoord expectedCoord) {
+        assertThat(coord.getCoordAt(direction), equalTo(expectedCoord));
+    }
+
+    @ParameterizedTest
+    @MethodSource("calculateDirectionParameters")
+    void calculateDirection(
+            final DungeonCoord coordTo,
+            final DirectionType expectedDirection) {
+        assertThat(coord.calculateDirection(coordTo), equalTo(expectedDirection));
+    }
+
+    @Test
+    void testToString() {
+        assertThat(new DungeonCoord(0, 0).toString(), equalTo("(0,0)"));
     }
 
 }

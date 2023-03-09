@@ -2,21 +2,20 @@ package com.momo2x.dungeon.engine.actors;
 
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
-import com.momo2x.dungeon.engine.map.DungeonMap;
-import com.momo2x.dungeon.engine.movement.DungeonDirectionType;
+import com.momo2x.dungeon.engine.movement.BounceStrategyType;
+import com.momo2x.dungeon.engine.movement.DirectionType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 public class DungeonWalker extends DungeonElement {
 
     @Getter
+    private final BounceStrategyType bounceStrategy;
+    @Getter
     @Setter
-    private DungeonDirectionType direction;
+    private DirectionType direction;
 
     @Getter
     @Setter
@@ -24,10 +23,13 @@ public class DungeonWalker extends DungeonElement {
 
     public DungeonWalker(
             final String id,
+            final String avatar,
             final boolean blocker,
-            final DungeonDirectionType direction) {
-        super(id, true);
+            final DirectionType direction,
+            final BounceStrategyType bounceStrategy) {
+        super(id, avatar, blocker);
         this.direction = direction;
+        this.bounceStrategy = bounceStrategy;
     }
 
     public DungeonCoord getCoord() {
