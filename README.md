@@ -7,17 +7,10 @@ facing a different set of adversities.
 
 Currently, it's just a dream.
 
-## Status
+## Current state
 
-#### Version 0.0.2 [???](https://github.com/alejoceballos/websocket-dungeon-walker/commit/???)
+<img src="README.files/v0.0.2-preview.gif" title="Version 0.0.2 Preview" alt="Version 0.0.2 Preview" height="50%" width="50%">
 
-The map and its inhabitants can be dynamically loaded based on configuration files. This enables a different
-set of maps allowing more complex scenarios.
-
-#### Version 0.0.1 [11731ba2](https://github.com/alejoceballos/websocket-dungeon-walker/commit/11731ba280bde152cee1f3f223758ee9bd16814a)
-
-Nothing but a lot of letters wandering in a walled squared field, bumping and bouncing each other. But
-their movement and positioning is controlled by the backend and dynamically updated using websockets.
 
 ## Motivation
 
@@ -49,6 +42,22 @@ mvn spring-boot:run
 
 1. Go to `http://localhost:8080/`
 2. Log in with user `test` and password `test`.
+
+## Versions
+
+#### Version 0.0.2 [99373f2](https://github.com/alejoceballos/websocket-dungeon-walker/commit/99373f23b9d49f2bcecc605c83d07e247477146f)
+
+The map and its inhabitants can be dynamically loaded based on configuration files. This enables a different
+set of maps allowing more complex scenarios.
+
+<img src="README.files/v0.0.2-preview.gif" title="Version 0.0.2 Preview" alt="Version 0.0.2 Preview" height="50%" width="50%">
+
+#### Version 0.0.1 [11731ba2](https://github.com/alejoceballos/websocket-dungeon-walker/commit/11731ba280bde152cee1f3f223758ee9bd16814a)
+
+Nothing but a lot of letters wandering in a walled squared field, bumping and bouncing each other. But
+their movement and positioning is controlled by the backend and dynamically updated using websockets.
+
+<img src="README.files/v0.0.1-preview.gif" title="Version 0.0.1 Preview" alt="Version 0.0.1 Preview" height="50%" width="50%">
 
 ## Basic Architecture
 
