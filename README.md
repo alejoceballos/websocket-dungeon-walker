@@ -9,7 +9,7 @@ Currently, it's just a dream.
 
 ## Current state
 
-<img src="README.files/v0.0.2-preview.gif" title="Version 0.0.2 Preview" alt="Version 0.0.2 Preview" height="50%" width="50%">
+<img src="README.files/v0.0.3-preview.gif" title="Version 0.0.3 Preview" alt="Version 0.0.3 Preview" height="50%" width="50%">
 
 
 ## Motivation
@@ -45,14 +45,21 @@ mvn spring-boot:run
 
 ## Versions
 
-#### Version 0.0.2 [99373f2](https://github.com/alejoceballos/websocket-dungeon-walker/commit/99373f23b9d49f2bcecc605c83d07e247477146f)
+#### Version 0.0.3 ([62f1e70b](https://github.com/alejoceballos/websocket-dungeon-walker/commit/62f1e70b6ba31d8ace8edb41ea5d66eaf3f42280))
+
+Dungeon now has images! The walls are painted, and we have a beautiful zombie head bouncing all over! Also you can set
+the speed of walkers from 1 to 10 now. Just set it in the data file.
+
+<img src="README.files/v0.0.3-preview.gif" title="Version 0.0.3 Preview" alt="Version 0.0.3 Preview" height="50%" width="50%">
+
+#### Version 0.0.2 ([99373f2](https://github.com/alejoceballos/websocket-dungeon-walker/commit/99373f23b9d49f2bcecc605c83d07e247477146f))
 
 The map and its inhabitants can be dynamically loaded based on configuration files. This enables a different
 set of maps allowing more complex scenarios.
 
 <img src="README.files/v0.0.2-preview.gif" title="Version 0.0.2 Preview" alt="Version 0.0.2 Preview" height="50%" width="50%">
 
-#### Version 0.0.1 [11731ba2](https://github.com/alejoceballos/websocket-dungeon-walker/commit/11731ba280bde152cee1f3f223758ee9bd16814a)
+#### Version 0.0.1 ([11731ba2](https://github.com/alejoceballos/websocket-dungeon-walker/commit/11731ba280bde152cee1f3f223758ee9bd16814a))
 
 Nothing but a lot of letters wandering in a walled squared field, bumping and bouncing each other. But
 their movement and positioning is controlled by the backend and dynamically updated using websockets.
