@@ -1,13 +1,25 @@
 table.table--grid {
-    border-spacing: 1px;
+    border-spacing: 0;
 }
 
 table.table--grid th, table.table--grid td {
-    width: 15px;
+    box-sizing: border-box;
     text-align: center;
+    width: 32px;
+    height: 32px;
 }
 
 table.table--grid td {
-    border: 1px solid black;
-    padding: 2px;
+    border: 0;
+    padding: 0;
+}
+
+.wall-img {
+    background-image: url("wall-32x32.jpg");
+    background-repeat: no-repeat;
+}
+
+.zombie-img {
+    background-image: url("zombie-32x32.png");
+    background-repeat: no-repeat;
 }

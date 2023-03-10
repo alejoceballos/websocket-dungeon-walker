@@ -5,7 +5,6 @@ import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.actors.DungeonWall;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
-import com.momo2x.dungeon.engine.movement.MovementManager;
 
 import java.util.*;
 
@@ -97,20 +96,22 @@ public class MapTestUtil {
                     "blocker": true,
                     "avatar": "A",
                     "direction": "NE",
+                    "speed": 5,
                     "bounce": "simple"
                   }
                 }
             """;
 
     public static final Map<String, CatalogueItem> LOADED_CATALOGUE = Map.of(
-            "   ", new CatalogueItem("empty", false, null, null, null),
-            "###", new CatalogueItem("wall", true, "#", null, null),
-            "001", new CatalogueItem("walker", true, "A", "NE", "simple")
+            "   ", new CatalogueItem("empty", false, null, null, 0, null),
+            "###", new CatalogueItem("wall", true, "#", null, 0, null),
+            "001", new CatalogueItem("walker", true, "A", "NE", 5, "simple")
     );
 
     public static final DungeonWall DUNGEON_WALL = new DungeonWall("###", "#", true);
 
-    public static final DungeonWalker DUNGEON_WALKER = new DungeonWalker("001", "1", true, NE, SIMPLE);
+    public static final DungeonWalker DUNGEON_WALKER =
+            new DungeonWalker("001", "1", true, NE, 5, SIMPLE);
 
     public static final Map<DungeonCoord, DungeonCell> MAP_CELLS = new HashMap<>() {{
         put(new DungeonCoord(0, 0), new DungeonCell(new DungeonCoord(0, 0), DUNGEON_WALL));

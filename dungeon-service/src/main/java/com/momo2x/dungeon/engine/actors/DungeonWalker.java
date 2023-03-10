@@ -18,6 +18,9 @@ public class DungeonWalker extends DungeonElement {
     private DirectionType direction;
 
     @Getter
+    private final int speed;
+
+    @Getter
     @Setter
     private DungeonCell previousCell;
 
@@ -26,9 +29,11 @@ public class DungeonWalker extends DungeonElement {
             final String avatar,
             final boolean blocker,
             final DirectionType direction,
+            final int speed,
             final BounceStrategyType bounceStrategy) {
         super(id, avatar, blocker);
         this.direction = direction;
+        this.speed = speed;
         this.bounceStrategy = bounceStrategy;
     }
 

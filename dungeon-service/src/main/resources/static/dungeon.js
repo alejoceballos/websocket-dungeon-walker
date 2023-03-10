@@ -43,7 +43,7 @@ const createDungeon = dungeonMap => {
             const {avatar, coord} = element;
             const {x, y} = coord;
 
-            $(`#${getTdId(x, y)}`).html(avatar);
+            $(`#${getTdId(x, y)}`).addClass(avatar);
         }
     }
 }
@@ -68,8 +68,8 @@ const reRender = walker => {
 
     setMessage(`[${id}] From (${previous.x},${previous.y}) to (${current.x},${current.y})`);
 
-    $(`#${previousId}`).html("");
-    $(`#${currentId}`).html(avatar);
+    $(`#${previousId}`).removeClass(avatar);
+    $(`#${currentId}`).addClass(avatar);
 }
 
 const getTdId = (x, y) => `coord-${x}-${y}`;

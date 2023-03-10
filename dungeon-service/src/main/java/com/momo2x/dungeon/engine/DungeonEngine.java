@@ -65,7 +65,7 @@ public class DungeonEngine {
                 log.info("Walker {} started moving", manager.getWalker().getId());
 
                 while (true) {
-                    Thread.sleep(500);
+                    Thread.sleep(manager.calculateSleepTme());
                     manager.move();
                     this.updater.update(manager.getWalker());
                 }

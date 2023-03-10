@@ -5,13 +5,14 @@
   "###": {
     "type": "wall",
     "blocker": true,
-    "avatar": "#"
+    "avatar": "wall-img"
   },
   "001": {
     "type": "walker",
     "blocker": true,
-    "avatar": "A",
+    "avatar": "zombie-img",
     "direction": "NE",
+    "speed": 10,
     "bounce": "simple"
   }
 }

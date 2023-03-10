@@ -46,8 +46,8 @@ public class MapMapperTest {
         final var map = new DungeonMap(2, 3, source, null, null);
 
         final var expected = List.of(
-                new ElementDto("AAA", "A", new CoordinateDto(0, 0)),
-                new ElementDto("BBB", "B", new CoordinateDto(1, 1))
+                new ElementDto("AAA", "A", 5, new CoordinateDto(0, 0)),
+                new ElementDto("BBB", "B", 6, new CoordinateDto(1, 1))
         );
 
         final var actual = mapper.toDto(map);

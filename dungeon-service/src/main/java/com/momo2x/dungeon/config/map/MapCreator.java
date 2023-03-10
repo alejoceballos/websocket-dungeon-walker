@@ -96,6 +96,7 @@ public class MapCreator {
                     item.avatar(),
                     item.blocker(),
                     DirectionType.valueOf(item.direction()),
+                    item.speed(),
                     BounceStrategyType.valueOf(item.bounce().toUpperCase()));
         };
     }

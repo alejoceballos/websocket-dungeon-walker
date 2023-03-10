@@ -40,4 +40,9 @@ public class MovementManager {
         }
     }
 
+    public long calculateSleepTme() {
+        final var speed = walker.getSpeed() < 1 ? 1 : walker.getSpeed() > 10 ? 10 : walker.getSpeed();
+        return 10 * (100 - ((speed - 1) * 10L));
+    }
+
 }
