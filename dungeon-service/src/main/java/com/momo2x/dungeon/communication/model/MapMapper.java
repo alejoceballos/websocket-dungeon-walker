@@ -1,6 +1,5 @@
 package com.momo2x.dungeon.communication.model;
 
-import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;
@@ -28,7 +27,6 @@ public interface MapMapper {
                         new ElementDto(
                                 element.getId(),
                                 element.getAvatar(),
-                                (element instanceof DungeonWalker walker) ? walker.getSpeed() : 0,
                                 new CoordinateDto(coord.x(), coord.y())));
             }
         }

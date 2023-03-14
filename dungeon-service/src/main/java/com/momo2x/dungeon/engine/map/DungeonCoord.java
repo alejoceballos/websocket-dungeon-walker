@@ -2,7 +2,10 @@ package com.momo2x.dungeon.engine.map;
 
 import com.momo2x.dungeon.engine.movement.DirectionType;
 
-import static com.momo2x.dungeon.engine.movement.DirectionType.*;
+import static com.momo2x.dungeon.engine.movement.DirectionType.EASTERN;
+import static com.momo2x.dungeon.engine.movement.DirectionType.NORTHERN;
+import static com.momo2x.dungeon.engine.movement.DirectionType.SOUTHERN;
+import static com.momo2x.dungeon.engine.movement.DirectionType.WESTERN;
 
 public record DungeonCoord(int x, int y) {
 

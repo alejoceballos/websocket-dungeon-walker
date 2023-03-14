@@ -17,9 +17,9 @@ public class MapFileReader {
     private final DungeonProperties properties;
 
     public List<String> readMapCoords() throws IOException {
-        final var mapFile = properties.getMapFile();
+        final var mapFile = this.properties.getMapFile();
 
-        log.info("Reading '%s' with map coordinates and its elements placement".formatted(mapFile));
+        log.info("Reading '{}' with map coordinates and its elements placement", mapFile);
 
         try (final var input = this.getClass().getResourceAsStream(mapFile)) {
             if (input == null) {
@@ -40,9 +40,9 @@ public class MapFileReader {
     }
 
     public String readMapElements() throws IOException {
-        final var dataFile = properties.getDataFile();
+        final var dataFile = this.properties.getDataFile();
 
-        log.info("Reading '%s' with elements information".formatted(dataFile));
+        log.info("Reading '{}' with elements information", dataFile);
 
         try (final var input = this.getClass().getResourceAsStream(dataFile)) {
             if (input == null) {

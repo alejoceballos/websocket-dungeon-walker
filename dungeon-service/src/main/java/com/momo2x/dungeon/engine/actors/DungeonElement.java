@@ -33,6 +33,6 @@ public abstract class DungeonElement {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(this.id);
     }
 }

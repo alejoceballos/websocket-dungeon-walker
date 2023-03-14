@@ -3,7 +3,6 @@ package com.momo2x.dungeon.integration.config.map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.momo2x.dungeon.config.DungeonProperties;
 import com.momo2x.dungeon.config.map.MapFileReader;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,10 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
 
 
 class MapFileReaderTest {
@@ -59,6 +61,6 @@ class MapFileReaderTest {
 
         assertThat(
                 mapper.readTree(new MapFileReader(PROPS).readMapElements()),
-                Matchers.equalTo(mapper.readTree(RAW_JSON)));
+                equalTo(mapper.readTree(RAW_JSON)));
     }
 }

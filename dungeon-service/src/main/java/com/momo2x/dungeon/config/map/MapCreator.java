@@ -1,5 +1,6 @@
 package com.momo2x.dungeon.config.map;
 
+import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
 import com.momo2x.dungeon.engine.actors.DungeonElement;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.actors.DungeonWall;
@@ -12,6 +13,7 @@ import com.momo2x.dungeon.engine.movement.DirectionType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,38 +31,38 @@ public class MapCreator {
 
         final var map = new ConcurrentHashMap<DungeonCoord, DungeonCell>();
         final var walls = new HashSet<DungeonWall>();
-        final var walkers = new HashSet<DungeonWalker>();
+        final var walkers = new HashMap<String, DungeonWalker>();
 
         var maxX = 0;
         var maxY = 0;
 
-        for (var elementCoords : elementsCoordsMap.entrySet()) {
-            final var id = elementCoords.getKey();
+        for (var elementCoords : this.elementsCoordsMap.entrySet()) {
+            final var elementId = elementCoords.getKey();
 
             DungeonElement element = null;
 
-            if (id != null) {
-                final var catalogueItem = catalogueMap.get(id);
+            if (elementId != null) {
+                final var catalogueItem = this.catalogueMap.get(elementId);
 
                 if (catalogueItem == null) {
                     throw new MalformedCatalogueException(
-                            "Element [%s] in map has no correspondent in object's catalogue".formatted(id));
+                            "Element [%s] in map has no correspondent in object's catalogue".formatted(elementId));
                 }
 
-                element = createElement(id, catalogueItem);
+                element = createElement(elementId, catalogueItem);
 
                 if (element instanceof DungeonWall wall) {
                     walls.add(wall);
 
                 } else if (element instanceof DungeonWalker walker) {
-                    if (walkers.contains(walker)) {
+                    if (walkers.containsKey(elementId)) {
                         throw new MalformedMapException(
                                 ("Element [%s] has been already processed. " +
                                         "A '%s' cannot be in two coordinates at the same time")
                                         .formatted(walker.getId(), walker.getClass().getSimpleName()));
                     }
 
-                    walkers.add(walker);
+                    walkers.put(elementId, walker);
                 }
             }
 
@@ -73,6 +75,7 @@ public class MapCreator {
                 }
 
                 map.put(coord, cell);
+
                 maxX = coord.x() > maxX ? coord.x() : maxX;
                 maxY = coord.y() > maxY ? coord.y() : maxY;
             }
@@ -91,7 +94,7 @@ public class MapCreator {
         return switch (type) {
             case EMPTY -> null;
             case WALL -> new DungeonWall(id, item.avatar(), item.blocker());
-            case WALKER -> new DungeonWalker(
+            case WALKER -> new DungeonAutonomousWalker(
                     id,
                     item.avatar(),
                     item.blocker(),

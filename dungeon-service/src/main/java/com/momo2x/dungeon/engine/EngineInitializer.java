@@ -13,8 +13,8 @@ public class EngineInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws InterruptedException {
-        engine.init();
-        engine.run();
+        this.engine.init();
+        this.engine.run();
     }
 
 }

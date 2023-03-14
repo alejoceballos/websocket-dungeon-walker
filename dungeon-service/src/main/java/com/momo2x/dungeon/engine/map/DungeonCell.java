@@ -1,7 +1,11 @@
 package com.momo2x.dungeon.engine.map;
 
 import com.momo2x.dungeon.engine.actors.DungeonElement;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
@@ -23,7 +27,10 @@ public class DungeonCell {
 
     @Override
     public String toString() {
-        return "Cell " + (coord == null ? "(?,?)" : coord) + ": " + (element == null ? "empty" : element.getId());
+        return "Cell " +
+                (this.coord == null ? "(?,?)" : this.coord) +
+                ": " +
+                (this.element == null ? "empty" : this.element.getId());
     }
 
     @Override
@@ -31,11 +38,11 @@ public class DungeonCell {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DungeonCell that = (DungeonCell) o;
-        return coord.equals(that.coord);
+        return this.coord.equals(that.coord);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coord);
+        return Objects.hash(this.coord);
     }
 }

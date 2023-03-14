@@ -1,6 +1,11 @@
 package com.momo2x.dungeon.config;
 
-import com.momo2x.dungeon.config.map.*;
+import com.momo2x.dungeon.config.map.ElementCatalogueLoader;
+import com.momo2x.dungeon.config.map.MalformedCatalogueException;
+import com.momo2x.dungeon.config.map.MalformedMapException;
+import com.momo2x.dungeon.config.map.MapCreator;
+import com.momo2x.dungeon.config.map.MapFileReader;
+import com.momo2x.dungeon.config.map.MapLoader;
 import com.momo2x.dungeon.engine.map.DungeonMap;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

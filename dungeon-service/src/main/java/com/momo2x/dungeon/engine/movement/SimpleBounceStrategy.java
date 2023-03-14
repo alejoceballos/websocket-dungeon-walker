@@ -8,7 +8,14 @@ import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 import java.util.Random;
 
-import static com.momo2x.dungeon.engine.movement.DirectionType.*;
+import static com.momo2x.dungeon.engine.movement.DirectionType.E;
+import static com.momo2x.dungeon.engine.movement.DirectionType.N;
+import static com.momo2x.dungeon.engine.movement.DirectionType.NE;
+import static com.momo2x.dungeon.engine.movement.DirectionType.NW;
+import static com.momo2x.dungeon.engine.movement.DirectionType.S;
+import static com.momo2x.dungeon.engine.movement.DirectionType.SE;
+import static com.momo2x.dungeon.engine.movement.DirectionType.SW;
+import static com.momo2x.dungeon.engine.movement.DirectionType.W;
 
 @RequiredArgsConstructor
 public class SimpleBounceStrategy implements BounceStrategy {
@@ -62,10 +69,10 @@ public class SimpleBounceStrategy implements BounceStrategy {
         final var cells = randomizeCells(cell01, cell02);
 
         if (!cells[0].isBlocked()) {
-            return walker.getCoord().calculateDirection(cells[0].getCoord());
+            return this.walker.getCoord().calculateDirection(cells[0].getCoord());
 
         } else if (!cells[1].isBlocked()) {
-            return walker.getCoord().calculateDirection(cells[1].getCoord());
+            return this.walker.getCoord().calculateDirection(cells[1].getCoord());
         }
 
         return null;
@@ -73,7 +80,7 @@ public class SimpleBounceStrategy implements BounceStrategy {
 
     private DungeonCell[] randomizeCells(DungeonCell cell01, DungeonCell cell02) {
         final var cells = new DungeonCell[2];
-        final var idx = randomizer.nextInt(2);
+        final var idx = this.randomizer.nextInt(2);
 
         cells[idx] = cell01;
         cells[1 - idx] = cell02;

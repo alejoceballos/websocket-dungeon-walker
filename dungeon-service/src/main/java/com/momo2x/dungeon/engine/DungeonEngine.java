@@ -1,7 +1,7 @@
 package com.momo2x.dungeon.engine;
 
 import com.momo2x.dungeon.communication.controller.DungeonUpdater;
-import com.momo2x.dungeon.engine.actors.DungeonWalker;
+import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
 import com.momo2x.dungeon.engine.map.DungeonMap;
 import com.momo2x.dungeon.engine.movement.BounceException;
 import com.momo2x.dungeon.engine.movement.BounceStrategy;
@@ -31,8 +31,12 @@ public class DungeonEngine {
     private final List<MovementManager> managers = new ArrayList<>();
 
     public void init() {
-        managers.addAll(this.map
-                .getWalkers().stream().map(walker -> {
+        this.managers.addAll(this.map
+                .getWalkers()
+                .values()
+                .stream()
+                .filter(DungeonAutonomousWalker.class::isInstance)
+                .map(walker -> {
                     log.info(
                             "Processing walker {} at {} going to {}",
                             walker.getId(),
@@ -42,14 +46,14 @@ public class DungeonEngine {
                     final BounceStrategy bounce;
 
                     try {
-                        bounce = createStrategy(map, walker);
+                        bounce = createStrategy(this.map, (DungeonAutonomousWalker) walker);
                     } catch (BounceException e) {
                         throw new RuntimeException(e);
                     }
 
                     log.info("Bounce strategy for {} is {}", walker.getId(), bounce.getClass().getSimpleName());
 
-                    final var manager = new MovementManager(this.map, walker, bounce);
+                    final var manager = new MovementManager(this.map, (DungeonAutonomousWalker) walker, bounce);
 
                     log.info("Walker manager for {} created", walker.getId());
 
@@ -67,7 +71,7 @@ public class DungeonEngine {
                 while (true) {
                     Thread.sleep(manager.calculateSleepTme());
                     manager.move();
-                    this.updater.update(manager.getWalker());
+                    this.updater.broadcast(manager.getWalker());
                 }
             } catch (Exception e) {
                 e.printStackTrace(System.out);
@@ -79,7 +83,10 @@ public class DungeonEngine {
         }));
     }
 
-    private BounceStrategy createStrategy(final DungeonMap map, final DungeonWalker walker) throws BounceException {
+    private BounceStrategy createStrategy(
+            final DungeonMap map,
+            final DungeonAutonomousWalker walker
+    ) throws BounceException {
         if (walker.getBounceStrategy() == SIMPLE) {
             return new SimpleBounceStrategy(map, walker);
         }

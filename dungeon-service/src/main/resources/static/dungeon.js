@@ -1,12 +1,18 @@
-const STOMP_ENDPOINT = "/dungeon-ws";
-const REST_ENDPOINT = "/v1/dungeon";
-const SIMPLE_BROKER = "/dungeon";
+const REST_ENDPOINT = "/v1/map";
+const STOMP_REGISTRY_ENDPOINT = "/dungeon-ws";
+const SIMPLE_BROKER_DESTINATION = "/dungeon-refresh";
+const APP_DESTINATION_PREFIX = "/player-action";
 
 const start = () => {
-    const socket = new SockJS(STOMP_ENDPOINT);
+    startConnection();
+    setKeyPressEvents();
+}
+
+const startConnection = () => {
+    const socket = new SockJS(STOMP_REGISTRY_ENDPOINT);
 
     $.ajax({
-        url: `${REST_ENDPOINT}/map`,
+        url: `${REST_ENDPOINT}`,
         type: "GET",
         dataType: "json",
         success: dungeonMap => {
@@ -17,7 +23,60 @@ const start = () => {
     });
 
     return socket;
-}
+};
+
+const setKeyPressEvents = () => {
+    const ARROW_LEFT = "37";
+    const ARROW_UP = "38";
+    const ARROW_RIGHT = "39";
+    const ARROW_DOWN = "40";
+
+    const arrowsMap = {};
+    arrowsMap[ARROW_LEFT] = "W";
+    arrowsMap[ARROW_UP] = "N";
+    arrowsMap[ARROW_RIGHT] = "E";
+    arrowsMap[ARROW_DOWN] = "S";
+
+    const keys = {};
+
+    $(document).keydown(e => {
+        keys[e.which] = true;
+
+        const keySet = Object.keys(keys);
+        const keySetCount = keySet.length;
+
+        if (keySetCount === 0 || keySetCount > 2) {
+            return "";
+        }
+
+        const {v, h} = keySet.reduce((acc, key) => {
+            if ([ARROW_UP, ARROW_DOWN].includes(key)) {
+                acc.v = acc.v === "" ? arrowsMap[key] : "";
+            } else if ([ARROW_LEFT, ARROW_RIGHT].includes(key)) {
+                acc.h = acc.h === "" ? arrowsMap[key] : "";
+            }
+
+            return {v: acc.v, h: acc.h};
+        }, {
+            v: "",
+            h: ""
+        });
+
+        let msg = v + h;
+
+        if (msg === "") {
+            msg = "-";
+        } else {
+            send(msg)
+        }
+
+        setDirectionIndicator(msg);
+    });
+
+    $(document).keyup(e => {
+        delete keys[e.which];
+    });
+};
 
 const createDungeon = dungeonMap => {
     const {width, height, elements} = dungeonMap;
@@ -46,7 +105,9 @@ const createDungeon = dungeonMap => {
             $(`#${getTdId(x, y)}`).addClass(avatar);
         }
     }
-}
+};
+
+let dungeonPlayerClient;
 
 const webSocketConnect = socket => {
     const stompClient = Stomp.over(socket);
@@ -54,24 +115,57 @@ const webSocketConnect = socket => {
     stompClient.connect({}, frame => {
         console.log(frame);
         stompClient.subscribe(
-            `/user${SIMPLE_BROKER}`,
+            // `/user${SIMPLE_BROKER_DESTINATION}`,
+            SIMPLE_BROKER_DESTINATION,
             result => reRender(JSON.parse(result.body)));
     });
 
-    return stompClient;
-}
+    dungeonPlayerClient = stompClient;
+};
 
 const reRender = walker => {
     const {id, avatar, previous, current} = walker;
     const previousId = getTdId(previous.x, previous.y)
     const currentId = getTdId(current.x, current.y)
 
-    setMessage(`[${id}] From (${previous.x},${previous.y}) to (${current.x},${current.y})`);
+    const avatarClass = `${avatar}-${calculateDirection(previous, current)}`;
 
-    $(`#${previousId}`).removeClass(avatar);
-    $(`#${currentId}`).addClass(avatar);
-}
+    $(`#${previousId}`).removeClass();
+    $(`#${currentId}`).addClass(avatarClass);
+
+    setMessage(`[${id}] From (${previous.x},${previous.y}) to (${current.x},${current.y})`);
+};
 
 const getTdId = (x, y) => `coord-${x}-${y}`;
 
 const setMessage = msg => $("#p-message").text(msg);
+
+let directionTextTimeoutId = undefined;
+
+const setDirectionIndicator = msg => {
+    clearTimeout(directionTextTimeoutId);
+    $("#p-direction").text(msg);
+
+    directionTextTimeoutId = setTimeout(() => {
+        $("#p-direction").text("-");
+        clearTimeout(directionTextTimeoutId);
+    }, 2000);
+}
+
+const calculateDirection = (previousCoord, actualCoord) => {
+    const coordDirection =
+        (previousCoord.y === actualCoord.y ? "" : previousCoord.y > actualCoord.y ? "N" : "S") +
+        (previousCoord.x === actualCoord.x ? "" : previousCoord.x > actualCoord.x ? "W" : "E");
+
+    return coordDirection === "" ? "E" : coordDirection;
+};
+
+const send = direction => {
+    dungeonPlayerClient.send(
+        `${APP_DESTINATION_PREFIX}/move`,
+        {},
+        JSON.stringify(
+            {
+                'direction': direction
+            }));
+};

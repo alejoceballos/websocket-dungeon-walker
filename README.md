@@ -9,7 +9,7 @@ Currently, it's just a dream.
 
 ## Current state
 
-<img src="README.files/v0.0.3-preview.gif" title="Version 0.0.3 Preview" alt="Version 0.0.3 Preview" height="50%" width="50%">
+<img src="README.files/v0.0.4-preview.gif" title="Version 0.0.4 Preview" alt="Version 0.0.4 Preview" height="50%" width="50%">
 
 
 ## Motivation
@@ -26,6 +26,7 @@ Use a game scenario to study a set of technologies, such as:
 - Docker (TBD)
 - Apache Kafka (TBD)
 - Some Relational/NoSQL database (TBD)
+- GraphQL (TBD)
 - Microservices (TBD)
 - Kubernetes (TBD)
 - Some cloud provider (AWS? GCP?)
@@ -41,9 +42,15 @@ mvn spring-boot:run
 ### 2. Open your browser
 
 1. Go to `http://localhost:8080/`
-2. Log in with user `test` and password `test`.
+2. Log in either as user `he` (and password `hepwd`) or `she` (and password `shepwd`).
 
 ## Versions
+
+#### Version 0.0.4
+
+What about taking part of the game by driving a character through the maze? Now it is possible to use the arrow keys to
+navigate through the dungeon while some dumb zombies keep bouncing the walls! You can also log as two users now, `he`
+or `she` for a more interactive game.
 
 #### Version 0.0.3 ([62f1e70b](https://github.com/alejoceballos/websocket-dungeon-walker/commit/62f1e70b6ba31d8ace8edb41ea5d66eaf3f42280))
 
@@ -81,3 +88,10 @@ and set a json file with their characteristics.
 
 ![Map Load Sequence Diagram](README.files/map-load-sequence-diagram.png)
 
+### Interchanging Messages
+
+There are two types of message exchanging in the system. A simples REST API that is used to load the dungeon
+characteristics and configurations (I won't go further on that, kindda self explanatory) and WebSockets used
+to manage communication between the server and the client enabling dynamic map updates its elements.
+
+![Web Socket Architecture](README.files/websocket-architecture.png)

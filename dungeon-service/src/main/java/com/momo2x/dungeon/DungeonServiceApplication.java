@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DungeonServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DungeonServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DungeonServiceApplication.class, args);
+    }
 
 }

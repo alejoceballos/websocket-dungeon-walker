@@ -25,7 +25,7 @@ public enum DirectionType {
     private final String opposite;
 
     public DirectionType getOpposite() {
-        return DirectionType.valueOf(opposite);
+        return DirectionType.valueOf(this.opposite);
     }
 
     @Override
