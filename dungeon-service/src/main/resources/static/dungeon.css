@@ -2,7 +2,7 @@
 .arrow-img-released-E,
 .arrow-img-released-S,
 .arrow-img-released-N {
-    background-image: url("arrow-released-64x64.png");
+    background-image: url("imgs/arrow-released-64x64.png");
     background-repeat: no-repeat;
 }
 
@@ -30,7 +30,7 @@
 .arrow-img-pressed-W,
 .arrow-img-pressed-S,
 .arrow-img-pressed-N {
-    background-image: url("arrow-pressed-64x64.png");
+    background-image: url("imgs/arrow-pressed-64x64.png");
     background-repeat: no-repeat;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .wall-img {
-    background-image: url("wall-32x32.jpg");
+    background-image: url("imgs/wall-32x32.jpg");
     background-repeat: no-repeat;
 }
 
@@ -68,14 +68,8 @@
 .he-img-NW,
 .he-img-W,
 .he-img-SW {
-    background-image: url("he-head-32x32.png");
+    background-image: url("imgs/he-head-32x32.png");
     background-repeat: no-repeat;
-}
-
-.he-img-NW,
-.he-img-W,
-.he-img-SW {
-    transform: scaleX(-1);
 }
 
 .she-img,
@@ -87,31 +81,91 @@
 .she-img-NW,
 .she-img-W,
 .she-img-SW {
-    background-image: url("she-head-32x32.png");
+    background-image: url("imgs/she-head-32x32.png");
     background-repeat: no-repeat;
 }
 
+.he-zombie-img-N,
+.he-zombie-img-NE,
+.he-zombie-img-E,
+.he-zombie-img-SE,
+.he-zombie-img-S,
+.he-zombie-img-NW,
+.he-zombie-img-W,
+.he-zombie-img-SW {
+    background-image: url("imgs/he-zombie-32x32.png");
+    background-repeat: no-repeat;
+}
+
+.she-zombie-img-N,
+.she-zombie-img-NE,
+.she-zombie-img-E,
+.she-zombie-img-SE,
+.she-zombie-img-S,
+.she-zombie-img-NW,
+.she-zombie-img-W,
+.she-zombie-img-SW {
+    background-image: url("imgs/she-zombie-32x32.png");
+    background-repeat: no-repeat;
+}
+
+.skull-img-N,
+.skull-img-NE,
+.skull-img-E,
+.skull-img-SE,
+.skull-img-S,
+.skull-img-NW,
+.skull-img-W,
+.skull-img-SW {
+    background-image: url("imgs/skull-32x32.png");
+    background-repeat: no-repeat;
+}
+
+.slug-img-N,
+.slug-img-NE,
+.slug-img-E,
+.slug-img-SE,
+.slug-img-S,
+.slug-img-NW,
+.slug-img-W,
+.slug-img-SW {
+    background-image: url("imgs/slug-32x32.png");
+    background-repeat: no-repeat;
+}
+
+.werewolf-img-N,
+.werewolf-img-NE,
+.werewolf-img-E,
+.werewolf-img-SE,
+.werewolf-img-S,
+.werewolf-img-NW,
+.werewolf-img-W,
+.werewolf-img-SW {
+    background-image: url("imgs/werewolf-32x32.png");
+    background-repeat: no-repeat;
+}
+
+.he-img-NW,
+.he-img-W,
+.he-img-SW,
 .she-img-NW,
 .she-img-W,
-.she-img-SW {
-    transform: scaleX(-1);
-}
-
-.zombie-img-N,
-.zombie-img-NE,
-.zombie-img-E,
-.zombie-img-SE,
-.zombie-img-S,
-.zombie-img-NW,
-.zombie-img-W,
-.zombie-img-SW {
-    background-image: url("zombie-32x32.png");
-    background-repeat: no-repeat;
-}
-
-.zombie-img-NW,
-.zombie-img-W,
-.zombie-img-SW {
+.she-img-SW,
+.he-zombie-img-NW,
+.he-zombie-img-W,
+.he-zombie-img-SW,
+.she-zombie-img-NW,
+.she-zombie-img-W,
+.she-zombie-img-SW,
+.skull-img-NW,
+.skull-img-W,
+.skull-img-SW,
+.slug-img-NW,
+.slug-img-W,
+.slug-img-SW,
+.werewolf-img-NW,
+.werewolf-img-W,
+.werewolf-img-SW {
     transform: scaleX(-1);
 }
 

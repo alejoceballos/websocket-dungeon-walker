@@ -9,7 +9,7 @@ Currently, it's just a dream 💭.
 
 ## Current state
 
-<img src="README.files/v0.0.5-preview.gif" title="Version 0.0.5 Preview" alt="Version 0.0.5 Preview" height="50%" width="50%">
+<img src="README.files/v0.0.6-preview.gif" title="Version 0.0.6 Preview" alt="Version 0.0.6 Preview" height="50%" width="50%">
 
 ## 🙂 Motivation
 
@@ -45,10 +45,16 @@ mvn spring-boot:run
 
 ## 📈 Versions
 
-#### Version 0.0.5
+#### Version 0.0.6
+
+More autonomous avatars in the map moving and bouncing around and more unit and integration tests.
+
+#### Version 0.0.5 ([98ef4ed6](https://github.com/alejoceballos/websocket-dungeon-walker/commit/98ef4ed6e1cd46ff762b80516e05d253cab35261))
 
 Now users can see what directional (arrows) keys they are pressing. Also fixed a little bug that prevented seeing
 the user's avatar until an arrow key was pressed.
+
+<img src="README.files/v0.0.5-preview.gif" title="Version 0.0.5 Preview" alt="Version 0.0.5 Preview" height="50%" width="50%">
 
 #### Version 0.0.4 ([6721c45a](https://github.com/alejoceballos/websocket-dungeon-walker/commit/6721c45a2aaf0cb0ed8622d60cc779b91bbccd3d))
 
