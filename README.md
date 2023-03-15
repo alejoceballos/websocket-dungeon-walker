@@ -1,18 +1,17 @@
-# Dungeon Walker
+# 🎲 Dungeon Walker
 
-Under development!
+🚧 *Under construction!*
 
-The goal is to create a RPG-like game where one ore more users can walk through different dungeon scenarios
-facing a different set of adversities.
+The goal is to create a RPG-like game where one or more users can walk through different dungeon scenarios
+facing a different set of adversities. 🎲🎮🕹️
 
-Currently, it's just a dream.
+Currently, it's just a dream 💭.
 
 ## Current state
 
 <img src="README.files/v0.0.5-preview.gif" title="Version 0.0.5 Preview" alt="Version 0.0.5 Preview" height="50%" width="50%">
 
-
-## Motivation
+## 🙂 Motivation
 
 Use a game scenario to study a set of technologies, such as:
 
@@ -41,10 +40,10 @@ mvn spring-boot:run
 
 ### 2. Open your browser
 
-1. Go to `http://localhost:8080/`
-2. Log in either as user `he` (and password `hepwd`) or `she` (and password `shepwd`).
+1. 🖥️ Go to `http://localhost:8080/`
+2. 🔑 Log in either as user `he` (and password `hepwd`) or `she` (and password `shepwd`).
 
-## Versions
+## 📈 Versions
 
 #### Version 0.0.5
 
