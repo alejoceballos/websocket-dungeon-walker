@@ -10,16 +10,38 @@
     <script src="/dungeon.js"></script>
 </head>
 <body onload="start()">
-<p id="p-message">-</p>
-<p id="p-direction">-</p>
-<table class="table--grid">
-    <thead id="dungeon-header">
-    <tr>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody id="dungeon-body">
-    </tbody>
-</table>
+<div class="div--main-wrapper">
+    <div class="div--table-wrapper">
+        <table class="arrow-table--grid">
+            <tbody>
+            <tr>
+                <td></td>
+                <td class="arrow-img-released-N" id="arrow-dir-N"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="arrow-img-released-W" id="arrow-dir-W"></td>
+                <td class="column--arrow-dir-text" id="arrow-dir"></td>
+                <td class="arrow-img-released-E" id="arrow-dir-E"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="arrow-img-released-S" id="arrow-dir-S"></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <table class="table--grid">
+        <thead id="dungeon-header">
+        <tr>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="dungeon-body">
+        </tbody>
+    </table>
+    <p id="p-message">-</p>
+</div>
 </body>
 </html>

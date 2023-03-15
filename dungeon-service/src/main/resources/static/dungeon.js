@@ -144,12 +144,31 @@ let directionTextTimeoutId = undefined;
 
 const setDirectionIndicator = msg => {
     clearTimeout(directionTextTimeoutId);
-    $("#p-direction").text(msg);
+
+    clearArrows();
+    $("#arrow-dir").text(msg);
+
+    const coords = msg.split("");
+
+    $(`#arrow-dir-${coords[0]}`).addClass(`arrow-img-pressed-${coords[0]}`);
+
+    if (msg.length > 1) {
+        $(`#arrow-dir-${coords[1]}`).addClass(`arrow-img-pressed-${coords[1]}`);
+    }
 
     directionTextTimeoutId = setTimeout(() => {
-        $("#p-direction").text("-");
+        clearArrows();
+        $("#arrow-dir").text("");
         clearTimeout(directionTextTimeoutId);
-    }, 2000);
+    }, 500);
+}
+
+const clearArrows = () => {
+    ["N", "E", "S", "W"].forEach(dir => {
+        const arrowElem = $(`#arrow-dir-${dir}`);
+        arrowElem.removeClass();
+        arrowElem.addClass(`arrow-img-released-${dir}`);
+    });
 }
 
 const calculateDirection = (previousCoord, actualCoord) => {

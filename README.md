@@ -9,7 +9,7 @@ Currently, it's just a dream.
 
 ## Current state
 
-<img src="README.files/v0.0.4-preview.gif" title="Version 0.0.4 Preview" alt="Version 0.0.4 Preview" height="50%" width="50%">
+<img src="README.files/v0.0.5-preview.gif" title="Version 0.0.5 Preview" alt="Version 0.0.5 Preview" height="50%" width="50%">
 
 
 ## Motivation
@@ -46,11 +46,18 @@ mvn spring-boot:run
 
 ## Versions
 
-#### Version 0.0.4
+#### Version 0.0.5
+
+Now users can see what directional (arrows) keys they are pressing. Also fixed a little bug that prevented seeing
+the user's avatar until an arrow key was pressed.
+
+#### Version 0.0.4 ([6721c45a](https://github.com/alejoceballos/websocket-dungeon-walker/commit/6721c45a2aaf0cb0ed8622d60cc779b91bbccd3d))
 
 What about taking part of the game by driving a character through the maze? Now it is possible to use the arrow keys to
 navigate through the dungeon while some dumb zombies keep bouncing the walls! You can also log as two users now, `he`
 or `she` for a more interactive game.
+
+<img src="README.files/v0.0.4-preview.gif" title="Version 0.0.4 Preview" alt="Version 0.0.4 Preview" height="50%" width="50%">
 
 #### Version 0.0.3 ([62f1e70b](https://github.com/alejoceballos/websocket-dungeon-walker/commit/62f1e70b6ba31d8ace8edb41ea5d66eaf3f42280))
 
