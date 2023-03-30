@@ -12,7 +12,7 @@
     "blocker": true,
     "avatar": "he-zombie-img",
     "direction": "NE",
-    "speed": 10,
+    "speed": 6,
     "bounce": "simple"
   },
   "002": {
@@ -20,7 +20,7 @@
     "blocker": true,
     "avatar": "she-zombie-img",
     "direction": "SW",
-    "speed": 9,
+    "speed": 4,
     "bounce": "simple"
   },
   "003": {
@@ -28,7 +28,7 @@
     "blocker": true,
     "avatar": "skull-img",
     "direction": "SE",
-    "speed": 8,
+    "speed": 2,
     "bounce": "simple"
   },
   "004": {
@@ -36,7 +36,7 @@
     "blocker": true,
     "avatar": "slug-img",
     "direction": "NE",
-    "speed": 7,
+    "speed": 4,
     "bounce": "simple"
   },
   "005": {

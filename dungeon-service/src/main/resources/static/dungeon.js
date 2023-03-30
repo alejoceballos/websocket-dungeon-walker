@@ -1,28 +1,38 @@
-const REST_ENDPOINT = "/v1/map";
+const REST_ENDPOINT_MAP = "/v1/maps";
+const REST_ENDPOINT_USER = "/v1/users";
 const STOMP_REGISTRY_ENDPOINT = "/dungeon-ws";
 const SIMPLE_BROKER_DESTINATION = "/dungeon-refresh";
 const APP_DESTINATION_PREFIX = "/player-action";
 
+const storage = {};
+
 const start = () => {
     startConnection();
     setKeyPressEvents();
-}
+};
 
 const startConnection = () => {
-    const socket = new SockJS(STOMP_REGISTRY_ENDPOINT);
+    fetch(`${REST_ENDPOINT_USER}/current`, afterFetchUser);
+};
 
+const fetch = (endpoint, onSuccess) =>
     $.ajax({
-        url: `${REST_ENDPOINT}`,
+        url: endpoint,
         type: "GET",
         dataType: "json",
-        success: dungeonMap => {
-            createDungeon(dungeonMap);
-            webSocketConnect(socket);
-        },
-        fail: () => setMessage("Encountered an error")
+        success: onSuccess
     });
 
-    return socket;
+const afterFetchUser = user => {
+    storage.user = user.id;
+    fetch(REST_ENDPOINT_MAP, afterFetchMap);
+};
+
+const afterFetchMap = dungeonMap => {
+    createDungeon(dungeonMap);
+
+    storage.socket = new SockJS(STOMP_REGISTRY_ENDPOINT);
+    webSocketConnect(storage.socket);
 };
 
 const setKeyPressEvents = () => {
@@ -107,20 +117,15 @@ const createDungeon = dungeonMap => {
     }
 };
 
-let dungeonPlayerClient;
-
 const webSocketConnect = socket => {
-    const stompClient = Stomp.over(socket);
+    storage.stompClient = Stomp.over(socket);
 
-    stompClient.connect({}, frame => {
-        console.log(frame);
-        stompClient.subscribe(
+    storage.stompClient.connect({}, frame => {
+        storage.stompClient.subscribe(
             // `/user${SIMPLE_BROKER_DESTINATION}`,
             SIMPLE_BROKER_DESTINATION,
             result => reRender(JSON.parse(result.body)));
     });
-
-    dungeonPlayerClient = stompClient;
 };
 
 const reRender = walker => {
@@ -131,7 +136,16 @@ const reRender = walker => {
     const avatarClass = `${avatar}-${calculateDirection(previous, current)}`;
 
     $(`#${previousId}`).removeClass();
-    $(`#${currentId}`).addClass(avatarClass);
+    const currentElement = $(`#${currentId}`);
+    currentElement.addClass(avatarClass);
+
+    if (id === storage.user) {
+        currentElement[0].scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+        });
+    }
 
     setMessage(`[${id}] From (${previous.x},${previous.y}) to (${current.x},${current.y})`);
 };
@@ -140,10 +154,8 @@ const getTdId = (x, y) => `coord-${x}-${y}`;
 
 const setMessage = msg => $("#p-message").text(msg);
 
-let directionTextTimeoutId = undefined;
-
 const setDirectionIndicator = msg => {
-    clearTimeout(directionTextTimeoutId);
+    clearTimeout(storage.directionTextTimeoutId);
 
     clearArrows();
     $("#arrow-dir").text(msg);
@@ -156,12 +168,12 @@ const setDirectionIndicator = msg => {
         $(`#arrow-dir-${coords[1]}`).addClass(`arrow-img-pressed-${coords[1]}`);
     }
 
-    directionTextTimeoutId = setTimeout(() => {
+    storage.directionTextTimeoutId = setTimeout(() => {
         clearArrows();
         $("#arrow-dir").text("");
-        clearTimeout(directionTextTimeoutId);
+        clearTimeout(storage.directionTextTimeoutId);
     }, 500);
-}
+};
 
 const clearArrows = () => {
     ["N", "E", "S", "W"].forEach(dir => {
@@ -169,7 +181,7 @@ const clearArrows = () => {
         arrowElem.removeClass();
         arrowElem.addClass(`arrow-img-released-${dir}`);
     });
-}
+};
 
 const calculateDirection = (previousCoord, actualCoord) => {
     const coordDirection =
@@ -179,12 +191,8 @@ const calculateDirection = (previousCoord, actualCoord) => {
     return coordDirection === "" ? "E" : coordDirection;
 };
 
-const send = direction => {
-    dungeonPlayerClient.send(
+const send = direction =>
+    storage.stompClient.send(
         `${APP_DESTINATION_PREFIX}/move`,
         {},
-        JSON.stringify(
-            {
-                'direction': direction
-            }));
-};
+        JSON.stringify({'direction': direction}));

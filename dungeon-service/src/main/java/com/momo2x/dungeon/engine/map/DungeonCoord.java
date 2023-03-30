@@ -9,7 +9,7 @@ import static com.momo2x.dungeon.engine.movement.DirectionType.WESTERN;
 
 public record DungeonCoord(int x, int y) {
 
-    public DungeonCoord getCoordAt(DirectionType direction) {
+    public DungeonCoord getCoordAt(final DirectionType direction) {
         assert direction != null : "Direction cannot be null";
 
         int x = this.x;

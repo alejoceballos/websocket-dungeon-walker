@@ -1,15 +1,16 @@
 package com.momo2x.dungeon;
 
 public class DungeonException extends Exception {
-    public DungeonException(String message) {
+
+    public DungeonException(final String message) {
         super(message);
     }
 
-    public DungeonException(Throwable cause) {
+    public DungeonException(final Throwable cause) {
         super(cause);
     }
 
-    public DungeonException(String message, Throwable cause) {
+    public DungeonException(final String message, final Throwable cause) {
         super(message, cause);
     }
 

@@ -9,7 +9,7 @@ Currently, it's just a dream 💭.
 
 ## Current state
 
-<img src="README.files/v0.0.6-preview.gif" title="Version 0.0.6 Preview" alt="Version 0.0.6 Preview" height="50%" width="50%">
+<img src="README.files/v0.0.7-preview.gif" title="Version 0.0.6 Preview" alt="Version 0.0.7 Preview" height="50%" width="50%">
 
 ## 🙂 Motivation
 
@@ -45,9 +45,15 @@ mvn spring-boot:run
 
 ## 📈 Versions
 
-#### Version 0.0.6
+#### Version 0.0.7
+
+Regardless the size of the dungeon the logged player's avatar will always be centered on the screen now.
+
+#### Version 0.0.6 ([1728b48d](https://github.com/alejoceballos/websocket-dungeon-walker/commit/1728b48d9bf3db5792302104027752957ca27739))
 
 More autonomous avatars in the map moving and bouncing around and more unit and integration tests.
+
+<img src="README.files/v0.0.6-preview.gif" title="Version 0.0.6 Preview" alt="Version 0.0.6 Preview" height="50%" width="50%">
 
 #### Version 0.0.5 ([98ef4ed6](https://github.com/alejoceballos/websocket-dungeon-walker/commit/98ef4ed6e1cd46ff762b80516e05d253cab35261))
 

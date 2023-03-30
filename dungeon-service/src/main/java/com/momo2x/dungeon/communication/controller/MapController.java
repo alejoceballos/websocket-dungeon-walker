@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1/map")
+@RequestMapping("/v1/maps")
 public class MapController {
 
     private final DungeonService service;

@@ -180,6 +180,7 @@ table.arrow-table--grid {
 table.table--grid,
 table.arrow-table--grid {
     border-spacing: 0;
+    min-width: max-content;
 }
 
 table.table--grid th,

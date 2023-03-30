@@ -12,7 +12,7 @@ public class EngineInitializer implements ApplicationRunner {
     private final DungeonEngine engine;
 
     @Override
-    public void run(ApplicationArguments args) throws InterruptedException {
+    public void run(final ApplicationArguments args) throws InterruptedException {
         this.engine.init();
         this.engine.run();
     }

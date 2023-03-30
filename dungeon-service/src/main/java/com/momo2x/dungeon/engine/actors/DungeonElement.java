@@ -24,10 +24,10 @@ public abstract class DungeonElement {
     protected DungeonCell cell;
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DungeonElement that = (DungeonElement) o;
+        final DungeonElement that = (DungeonElement) o;
         return id.equals(that.id);
     }
 

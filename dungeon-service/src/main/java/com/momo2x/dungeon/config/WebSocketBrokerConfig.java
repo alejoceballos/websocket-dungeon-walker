@@ -15,13 +15,13 @@ import static com.momo2x.dungeon.config.WebSocketConstants.STOMP_REGISTRY_ENDPOI
 public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
+    public void configureMessageBroker(final MessageBrokerRegistry config) {
         config.enableSimpleBroker(SIMPLE_BROKER_DESTINATION);
         config.setApplicationDestinationPrefixes(APP_DESTINATION_PREFIX);
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
+    public void registerStompEndpoints(final StompEndpointRegistry registry) {
         registry.addEndpoint(STOMP_REGISTRY_ENDPOINT);
         registry.addEndpoint(STOMP_REGISTRY_ENDPOINT).withSockJS();
     }

@@ -36,13 +36,13 @@ public class DungeonMap {
         return this.map.get(coord);
     }
 
-    private static void validateWalkerDirection(DirectionType direction) throws MovementException {
+    private static void validateWalkerDirection(final DirectionType direction) throws MovementException {
         if (direction == null) {
             throw new MovementException("No direction given");
         }
     }
 
-    private static void validateEnterMapCell(DungeonCoord coord, DungeonCell cell) throws CellException {
+    private static void validateEnterMapCell(final DungeonCoord coord, final DungeonCell cell) throws CellException {
         validateMapCell(coord, cell);
 
         if (cell.getElement() != null && cell.getElement().isBlocker()) {
@@ -50,13 +50,13 @@ public class DungeonMap {
         }
     }
 
-    private static void validateMapCell(DungeonCoord coord, DungeonCell cell) throws CellException {
+    private static void validateMapCell(final DungeonCoord coord, final DungeonCell cell) throws CellException {
         if (cell == null) {
             throw new CellException("No cell in coordinates %s".formatted(coord.toString()));
         }
     }
 
-    private static void validateMapElement(DungeonElement element) throws ElementException {
+    private static void validateMapElement(final DungeonElement element) throws ElementException {
         if (element == null) {
             throw new ElementException(
                     "It is not possible to place a null element",
@@ -119,7 +119,7 @@ public class DungeonMap {
         return walker;
     }
 
-    private void validateWalkerId(String id) throws MovementException {
+    private void validateWalkerId(final String id) throws MovementException {
         if (id.isBlank()) {
             throw new MovementException("Can't move a walker without and ID");
         }
@@ -129,7 +129,7 @@ public class DungeonMap {
         }
     }
 
-    private void validateMapCoordinate(DungeonCoord coord) throws CoordinateException {
+    private void validateMapCoordinate(final DungeonCoord coord) throws CoordinateException {
         if (coord == null) {
             throw new CoordinateException(
                     "It is not possible to have null coordinates in the map",

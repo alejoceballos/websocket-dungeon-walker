@@ -38,11 +38,10 @@ public class SimpleBounceStrategy implements BounceStrategy {
     }
 
     private DirectionType calculateFullBounce(
-            DirectionType dir01,
-            DirectionType dir02,
-            DirectionType dir03,
-            DirectionType dir04) {
-
+            final DirectionType dir01,
+            final DirectionType dir02,
+            final DirectionType dir03,
+            final DirectionType dir04) {
         return Optional
                 .ofNullable(calculateHalfBounceFromDirection(dir01, dir02))
                 .orElseGet(() -> Optional
@@ -51,8 +50,8 @@ public class SimpleBounceStrategy implements BounceStrategy {
     }
 
     private DirectionType calculateHalfBounceFromDirection(
-            DirectionType dir01,
-            DirectionType dir02) {
+            final DirectionType dir01,
+            final DirectionType dir02) {
         final var cell01 = getCellByDirection(dir01);
         final var cell02 = getCellByDirection(dir02);
 
@@ -60,12 +59,12 @@ public class SimpleBounceStrategy implements BounceStrategy {
 
     }
 
-    private DungeonCell getCellByDirection(DirectionType direction) {
+    private DungeonCell getCellByDirection(final DirectionType direction) {
         final var coord = this.walker.getCoord().getCoordAt(direction);
         return Optional.ofNullable(this.map.getCellAt(coord)).orElseGet(() -> new DungeonCell(coord));
     }
 
-    private DirectionType calculateHalfBounceFromCell(DungeonCell cell01, DungeonCell cell02) {
+    private DirectionType calculateHalfBounceFromCell(final DungeonCell cell01, final DungeonCell cell02) {
         final var cells = randomizeCells(cell01, cell02);
 
         if (!cells[0].isBlocked()) {
@@ -78,7 +77,7 @@ public class SimpleBounceStrategy implements BounceStrategy {
         return null;
     }
 
-    private DungeonCell[] randomizeCells(DungeonCell cell01, DungeonCell cell02) {
+    private DungeonCell[] randomizeCells(final DungeonCell cell01, final DungeonCell cell02) {
         final var cells = new DungeonCell[2];
         final var idx = this.randomizer.nextInt(2);
 
