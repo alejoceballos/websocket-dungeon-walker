@@ -1,7 +1,7 @@
 package com.momo2x.dungeon.communication.event;
 
 import com.momo2x.dungeon.DungeonException;
-import com.momo2x.dungeon.communication.controller.DungeonUpdater;
+import com.momo2x.dungeon.communication.controller.out.DungeonUpdater;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;

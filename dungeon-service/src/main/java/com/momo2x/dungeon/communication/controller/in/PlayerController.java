@@ -1,4 +1,4 @@
-package com.momo2x.dungeon.communication.controller;
+package com.momo2x.dungeon.communication.controller.in;
 
 import com.momo2x.dungeon.DungeonException;
 import com.momo2x.dungeon.communication.model.MovementDto;

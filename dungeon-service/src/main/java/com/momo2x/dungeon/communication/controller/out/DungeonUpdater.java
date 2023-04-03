@@ -1,4 +1,4 @@
-package com.momo2x.dungeon.communication.controller;
+package com.momo2x.dungeon.communication.controller.out;
 
 import com.momo2x.dungeon.communication.model.WalkerMapper;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;

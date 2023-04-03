@@ -1,6 +1,6 @@
 package com.momo2x.dungeon.unit.communication.controller;
 
-import com.momo2x.dungeon.communication.controller.DungeonUpdater;
+import com.momo2x.dungeon.communication.controller.out.DungeonUpdater;
 import com.momo2x.dungeon.communication.model.CoordinateDto;
 import com.momo2x.dungeon.communication.model.WalkerDto;
 import com.momo2x.dungeon.communication.model.WalkerMapper;

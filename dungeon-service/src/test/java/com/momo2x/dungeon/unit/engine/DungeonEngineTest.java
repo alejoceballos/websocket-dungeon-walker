@@ -1,6 +1,6 @@
 package com.momo2x.dungeon.unit.engine;
 
-import com.momo2x.dungeon.communication.controller.DungeonUpdater;
+import com.momo2x.dungeon.communication.controller.out.DungeonUpdater;
 import com.momo2x.dungeon.engine.DungeonEngine;
 import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
 import com.momo2x.dungeon.engine.map.DungeonCell;

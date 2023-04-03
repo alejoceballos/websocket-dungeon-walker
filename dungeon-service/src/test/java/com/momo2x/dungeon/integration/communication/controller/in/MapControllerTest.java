@@ -1,28 +1,18 @@
-package com.momo2x.dungeon.integration.communication.controller;
+package com.momo2x.dungeon.integration.communication.controller.in;
 
-import com.momo2x.dungeon.communication.model.MapMapper;
 import com.momo2x.dungeon.communication.model.MapMapperImpl;
-import com.momo2x.dungeon.communication.service.DungeonService;
-import com.momo2x.dungeon.communication.service.PlayerService;
 import com.momo2x.dungeon.engine.actors.DungeonWall;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;
-import org.junit.jupiter.api.AfterEach;
+import com.momo2x.dungeon.integration.communication.controller.BaseIntegrationTestController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Map;
 
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
@@ -32,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 @ComponentScan(basePackageClasses = {MapMapperImpl.class})
-class MapControllerTest {
+class MapControllerTest extends BaseIntegrationTestController {
 
     private static final DungeonMap MOCKED_MAP = new DungeonMap(
             2,
@@ -91,45 +81,16 @@ class MapControllerTest {
                 }
             """;
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private DungeonService service;
-
-    @SpyBean
-    private MapMapper mapper;
-
-    @MockBean
-    private PlayerService playerService;
-
-    @MockBean
-    private UserDetailsService userDetailsService;
-
-    @MockBean
-    private SecurityFilterChain securityFilterChain;
-
     @BeforeEach
     void mockService() {
-        when(this.service.getMap()).thenReturn(MOCKED_MAP);
-    }
-
-    @AfterEach
-    void resetMocks() {
-        reset(
-                this.service,
-                this.mapper,
-                this.playerService
-                ,
-                this.userDetailsService,
-                this.securityFilterChain);
+        when(this.dungeonService.getMap()).thenReturn(MOCKED_MAP);
     }
 
     @Test
     void getMap() throws Exception {
-        this.mockMvc.perform(
-                        get("/v1/map")
-                                .with(httpBasic("anyuser", "anypassword")))
+        mockMvc.perform(
+                        get("/v1/maps")
+                                .with(httpBasic(USERNAME, PASSWORD)))
                 .andExpectAll(
                         status().isOk(),
                         content().contentType(APPLICATION_JSON_VALUE),
