@@ -3,7 +3,6 @@ package com.momo2x.dungeon.config.map;
 import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
 import com.momo2x.dungeon.engine.actors.DungeonElement;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
-import com.momo2x.dungeon.engine.actors.DungeonWall;
 import com.momo2x.dungeon.engine.actors.ElementType;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
@@ -14,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
@@ -30,58 +29,48 @@ public class MapCreator {
         log.info("Creating the dungeon map");
 
         final var map = new ConcurrentHashMap<DungeonCoord, DungeonCell>();
-        final var walls = new HashSet<DungeonWall>();
         final var walkers = new HashMap<String, DungeonWalker>();
 
         var maxX = 0;
         var maxY = 0;
 
-        for (var elementCoords : this.elementsCoordsMap.entrySet()) {
+        for (final var elementCoords : this.elementsCoordsMap.entrySet()) {
             final var elementId = elementCoords.getKey();
 
-            DungeonElement element = null;
-
-            if (elementId != null) {
+            if (Objects.nonNull(elementId)) {
                 final var catalogueItem = this.catalogueMap.get(elementId);
 
-                if (catalogueItem == null) {
+                if (Objects.isNull(catalogueItem)) {
                     throw new MalformedCatalogueException(
                             "Element [%s] in map has no correspondent in object's catalogue".formatted(elementId));
                 }
 
-                element = createElement(elementId, catalogueItem);
+                for (final var coord : elementCoords.getValue()) {
+                    DungeonElement element = createElement(elementId, catalogueItem);
+                    final var cell = new DungeonCell(coord, element);
 
-                if (element instanceof DungeonWall wall) {
-                    walls.add(wall);
+                    element.setCell(cell);
+                    map.put(coord, cell);
 
-                } else if (element instanceof DungeonWalker walker) {
-                    if (walkers.containsKey(elementId)) {
-                        throw new MalformedMapException(
-                                ("Element [%s] has been already processed. " +
-                                        "A '%s' cannot be in two coordinates at the same time")
-                                        .formatted(walker.getId(), walker.getClass().getSimpleName()));
+                    maxX = Math.max(coord.x(), maxX);
+                    maxY = Math.max(coord.y(), maxY);
+
+                    if (element instanceof final DungeonWalker walker) {
+                        if (walkers.containsKey(elementId)) {
+                            throw new MalformedMapException(
+                                    ("Element [%s] has been already processed. " +
+                                            "A '%s' cannot be in two coordinates at the same time")
+                                            .formatted(walker.getId(), walker.getClass().getSimpleName()));
+                        }
+
+                        walkers.put(elementId, walker);
+                        walker.setPreviousCell(cell);
                     }
-
-                    walkers.put(elementId, walker);
                 }
-            }
-
-            for (var coord : elementCoords.getValue()) {
-                final var cell = new DungeonCell(coord, element);
-
-                if (element instanceof DungeonWalker walker) {
-                    walker.setCell(cell);
-                    walker.setPreviousCell(cell);
-                }
-
-                map.put(coord, cell);
-
-                maxX = coord.x() > maxX ? coord.x() : maxX;
-                maxY = coord.y() > maxY ? coord.y() : maxY;
             }
         }
 
-        return new DungeonMap(maxX + 1, maxY + 1, map, walls, walkers);
+        return new DungeonMap(maxX + 1, maxY + 1, map, walkers);
     }
 
     private DungeonElement createElement(final String id, final CatalogueItem item) throws MalformedElementException {
@@ -91,17 +80,17 @@ public class MapCreator {
 
         final var type = ElementType.valueOf(item.type().toUpperCase());
 
-        return switch (type) {
-            case EMPTY -> null;
-            case WALL -> new DungeonWall(id, item.avatar(), item.blocker());
-            case WALKER -> new DungeonAutonomousWalker(
+        if (type == ElementType.WALKER) {
+            return new DungeonAutonomousWalker(
                     id,
                     item.avatar(),
                     item.blocker(),
                     DirectionType.valueOf(item.direction()),
                     item.speed(),
                     BounceStrategyType.valueOf(item.bounce().toUpperCase()));
-        };
+        }
+
+        return new DungeonElement(id, item.avatar(), item.blocker());
     }
 
 }

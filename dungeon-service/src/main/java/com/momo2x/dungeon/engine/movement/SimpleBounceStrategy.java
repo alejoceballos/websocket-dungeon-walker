@@ -1,14 +1,14 @@
 package com.momo2x.dungeon.engine.movement;
 
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
-import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonMap;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.Random;
 
 import static com.momo2x.dungeon.engine.movement.DirectionType.E;
+import static com.momo2x.dungeon.engine.movement.DirectionType.EASTERN;
 import static com.momo2x.dungeon.engine.movement.DirectionType.N;
 import static com.momo2x.dungeon.engine.movement.DirectionType.NE;
 import static com.momo2x.dungeon.engine.movement.DirectionType.NW;
@@ -16,6 +16,7 @@ import static com.momo2x.dungeon.engine.movement.DirectionType.S;
 import static com.momo2x.dungeon.engine.movement.DirectionType.SE;
 import static com.momo2x.dungeon.engine.movement.DirectionType.SW;
 import static com.momo2x.dungeon.engine.movement.DirectionType.W;
+import static com.momo2x.dungeon.engine.movement.DirectionType.WESTERN;
 
 @RequiredArgsConstructor
 public class SimpleBounceStrategy implements BounceStrategy {
@@ -28,62 +29,92 @@ public class SimpleBounceStrategy implements BounceStrategy {
 
     @Override
     public DirectionType bounceDirection() {
-        return switch (this.walker.getDirection()) {
-            case SE -> calculateFullBounce(NE, SW, S, E);
-            case NW -> calculateFullBounce(NE, SW, N, W);
-            case NE -> calculateFullBounce(NW, SE, N, E);
-            case SW -> calculateFullBounce(NW, SE, S, S);
-            default -> this.walker.getDirection().getOpposite();
-        };
+        final var currDirection = this.walker.getDirection();
+
+        DirectionType nextDirection = null;
+
+        if (currDirection == NE) {
+            nextDirection = getNextDirectionOptions(SE, NW, NE.getOpposite());
+
+        } else if (currDirection == SE) {
+            nextDirection = getNextDirectionOptions(NE, SW, SE.getOpposite());
+
+        } else if (currDirection == NW) {
+            nextDirection = getNextDirectionOptions(SW, NE, NW.getOpposite());
+
+        } else if (currDirection == SW) {
+            nextDirection = getNextDirectionOptions(SE, NW, SW.getOpposite());
+
+        } else if (currDirection == S) {
+            nextDirection = getNextDirectionOptions(S.getOpposite());
+
+        } else if (currDirection == N) {
+            nextDirection = getNextDirectionOptions(N.getOpposite());
+
+        } else if (currDirection == E) {
+            nextDirection = getNextDirectionOptions(E.getOpposite());
+
+        } else if (currDirection == W) {
+            nextDirection = getNextDirectionOptions(W.getOpposite());
+        }
+
+        return nextDirection == null ? tryEachCoordinateOrGiveUp() : nextDirection;
     }
 
-    private DirectionType calculateFullBounce(
-            final DirectionType dir01,
-            final DirectionType dir02,
-            final DirectionType dir03,
-            final DirectionType dir04) {
-        return Optional
-                .ofNullable(calculateHalfBounceFromDirection(dir01, dir02))
-                .orElseGet(() -> Optional
-                        .ofNullable(calculateHalfBounceFromDirection(dir03, dir04))
-                        .orElseGet(() -> this.walker.getDirection().getOpposite()));
-    }
-
-    private DirectionType calculateHalfBounceFromDirection(
-            final DirectionType dir01,
-            final DirectionType dir02) {
-        final var cell01 = getCellByDirection(dir01);
-        final var cell02 = getCellByDirection(dir02);
-
-        return calculateHalfBounceFromCell(cell01, cell02);
-
-    }
-
-    private DungeonCell getCellByDirection(final DirectionType direction) {
-        final var coord = this.walker.getCoord().getCoordAt(direction);
-        return Optional.ofNullable(this.map.getCellAt(coord)).orElseGet(() -> new DungeonCell(coord));
-    }
-
-    private DirectionType calculateHalfBounceFromCell(final DungeonCell cell01, final DungeonCell cell02) {
-        final var cells = randomizeCells(cell01, cell02);
-
-        if (!cells[0].isBlocked()) {
-            return this.walker.getCoord().calculateDirection(cells[0].getCoord());
-
-        } else if (!cells[1].isBlocked()) {
-            return this.walker.getCoord().calculateDirection(cells[1].getCoord());
+    private DirectionType getNextDirectionOptions(final DirectionType... directionOptions) {
+        for (final var direction : directionOptions) {
+            if (this.isNextDirectionValid(direction)) {
+                return direction;
+            }
         }
 
         return null;
     }
 
-    private DungeonCell[] randomizeCells(final DungeonCell cell01, final DungeonCell cell02) {
-        final var cells = new DungeonCell[2];
-        final var idx = this.randomizer.nextInt(2);
+    private boolean isNextDirectionValid(final DirectionType nextDirection) {
+        final var currCoord = this.walker.getCoord();
+        final var nextCoord = currCoord.getCoordAt(nextDirection);
 
-        cells[idx] = cell01;
-        cells[1 - idx] = cell02;
+        return !this.map.getCellAt(nextCoord).isBlocked();
+    }
 
-        return cells;
+    private DirectionType tryEachCoordinateOrGiveUp() {
+        final var direction = this.walker.getDirection();
+
+        final var clockwiseCoordinates = List.of(N, NE, E, SE, S, SW, W, NW);
+        final var antiClockwiseCoordinates = List.of(N, NW, W, SW, S, SE, E, NE);
+        List<DirectionType> orderedDirections;
+
+        if (EASTERN.contains(direction)) {
+            orderedDirections = clockwiseCoordinates;
+        } else if (WESTERN.contains(direction)) {
+            orderedDirections = antiClockwiseCoordinates;
+        } else if (randomizer.nextBoolean()) {
+            orderedDirections = clockwiseCoordinates;
+        } else {
+            orderedDirections = antiClockwiseCoordinates;
+        }
+
+        final var currCoord = this.walker.getCoord();
+
+        var directionsCurrentIdx = orderedDirections.indexOf(direction) + 1;
+
+        for (var i = 0; i < orderedDirections.size() - 1; i++) {
+            final var currDirection = orderedDirections.get(directionsCurrentIdx);
+            final var coordAtDirection = currCoord.getCoordAt(currDirection);
+            final var cellAtDirection = this.map.getCellAt(coordAtDirection);
+
+            if (!cellAtDirection.isBlocked()) {
+                return currDirection;
+            }
+
+            if (directionsCurrentIdx == orderedDirections.size() - 1) {
+                directionsCurrentIdx = 0;
+            } else {
+                directionsCurrentIdx++;
+            }
+        }
+
+        return direction;
     }
 }

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import static com.momo2x.dungeon.unit.MapTestUtil.mockLoadedMap;
 import static com.momo2x.dungeon.unit.MapTestUtil.mockMapCells;
 import static com.momo2x.dungeon.unit.MapTestUtil.mockMapWalkers;
-import static com.momo2x.dungeon.unit.MapTestUtil.mockMapWalls;
 import static com.momo2x.dungeon.unit.MapTestUtil.mockUploadedCatalogue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -23,11 +22,6 @@ class MapCreatorTest {
         assertThat(dungeonMap.getWidth(), equalTo(6));
         assertThat(dungeonMap.getHeight(), equalTo(5));
 
-        assertThat(dungeonMap.getWalls().size(), equalTo(1));
-        assertThat(
-                dungeonMap.getWalls(),
-                containsInAnyOrder(mockMapWalls.get().toArray()));
-
         assertThat(dungeonMap.getWalkers().size(), equalTo(1));
         assertThat(
                 dungeonMap.getWalkers().values(),
@@ -38,6 +32,5 @@ class MapCreatorTest {
                 dungeonMap.getMap().entrySet(),
                 containsInAnyOrder(mockMapCells.get().entrySet().toArray()));
     }
-
 
 }

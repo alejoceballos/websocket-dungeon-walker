@@ -9,6 +9,7 @@ import org.mapstruct.Named;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 @Mapper(componentModel = "spring")
@@ -20,9 +21,9 @@ public interface MapMapper {
 
         for (var mapEntry : map.entrySet()) {
             final var coord = mapEntry.getKey();
-            final var element = mapEntry.getValue().getElement();
+            final var element = mapEntry.getValue().getTopElement();
 
-            if (element != null) {
+            if (Objects.nonNull(element)) {
                 elements.add(
                         new ElementDto(
                                 element.getId(),

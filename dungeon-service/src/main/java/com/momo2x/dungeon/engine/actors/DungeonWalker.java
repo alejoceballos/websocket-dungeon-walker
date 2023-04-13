@@ -31,4 +31,8 @@ public class DungeonWalker extends DungeonElement {
         return this.getCell().getCoord();
     }
 
+    public boolean isMoving() {
+        return !this.getCell().equals(this.previousCell);
+    }
+
 }

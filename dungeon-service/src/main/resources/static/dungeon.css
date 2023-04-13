@@ -59,6 +59,96 @@
     background-repeat: no-repeat;
 }
 
+.desert-img {
+    background-image: url("imgs/desert-32x32.png");
+    background-repeat: no-repeat;
+}
+
+.grass-img {
+    background-image: url("imgs/grass-32x32.png");
+    background-repeat: no-repeat;
+}
+
+.tree-00-img {
+    background-image: url("imgs/tree/000.png");
+    background-repeat: no-repeat;
+}
+
+.tree-01-img {
+    background-image: url("imgs/tree/001.png");
+    background-repeat: no-repeat;
+}
+
+.tree-02-img {
+    background-image: url("imgs/tree/002.png");
+    background-repeat: no-repeat;
+}
+
+.tree-03-img {
+    background-image: url("imgs/tree/003.png");
+    background-repeat: no-repeat;
+}
+
+.tree-04-img {
+    background-image: url("imgs/tree/004.png");
+    background-repeat: no-repeat;
+}
+
+.tree-05-img {
+    background-image: url("imgs/tree/005.png");
+    background-repeat: no-repeat;
+}
+
+.tree-06-img {
+    background-image: url("imgs/tree/006.png");
+    background-repeat: no-repeat;
+}
+
+.tree-07-img {
+    background-image: url("imgs/tree/007.png");
+    background-repeat: no-repeat;
+}
+
+.tree-08-img {
+    background-image: url("imgs/tree/008.png");
+    background-repeat: no-repeat;
+}
+
+.tree-09-img {
+    background-image: url("imgs/tree/009.png");
+    background-repeat: no-repeat;
+}
+
+.tree-0A-img {
+    background-image: url("imgs/tree/010.png");
+    background-repeat: no-repeat;
+}
+
+.tree-0B-img {
+    background-image: url("imgs/tree/011.png");
+    background-repeat: no-repeat;
+}
+
+.tree-0C-img {
+    background-image: url("imgs/tree/012.png");
+    background-repeat: no-repeat;
+}
+
+.tree-0D-img {
+    background-image: url("imgs/tree/013.png");
+    background-repeat: no-repeat;
+}
+
+.tree-0E-img {
+    background-image: url("imgs/tree/014.png");
+    background-repeat: no-repeat;
+}
+
+.tree-0F-img {
+    background-image: url("imgs/tree/015.png");
+    background-repeat: no-repeat;
+}
+
 .he-img,
 .he-img-N,
 .he-img-NE,

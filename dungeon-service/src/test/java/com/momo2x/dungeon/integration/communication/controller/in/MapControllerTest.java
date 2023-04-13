@@ -1,7 +1,7 @@
 package com.momo2x.dungeon.integration.communication.controller.in;
 
 import com.momo2x.dungeon.communication.model.MapMapperImpl;
-import com.momo2x.dungeon.engine.actors.DungeonWall;
+import com.momo2x.dungeon.engine.actors.DungeonElement;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;
@@ -29,15 +29,14 @@ class MapControllerTest extends BaseIntegrationTestController {
             2,
             Map.of(
                     new DungeonCoord(0, 0),
-                    new DungeonCell(new DungeonCoord(0, 0), new DungeonWall("001", "1", true)),
+                    new DungeonCell(new DungeonCoord(0, 0), new DungeonElement("W01", "1", true)),
                     new DungeonCoord(1, 0),
-                    new DungeonCell(new DungeonCoord(1, 0), new DungeonWall("002", "2", true)),
+                    new DungeonCell(new DungeonCoord(1, 0), new DungeonElement("W02", "2", true)),
                     new DungeonCoord(0, 1),
-                    new DungeonCell(new DungeonCoord(0, 1), new DungeonWall("003", "3", true)),
+                    new DungeonCell(new DungeonCoord(0, 1), new DungeonElement("W03", "3", true)),
                     new DungeonCoord(1, 1),
-                    new DungeonCell(new DungeonCoord(1, 1), new DungeonWall("004", "4", true))
+                    new DungeonCell(new DungeonCoord(1, 1), new DungeonElement("W04", "4", true))
             ),
-            null,
             null);
 
     private static final String MAP_OUTPUT_CONTENT = """
@@ -46,7 +45,7 @@ class MapControllerTest extends BaseIntegrationTestController {
                     "height": 2,
                     "elements": [
                         {
-                            "id": "001",
+                            "id": "W01",
                             "avatar": "1",
                             "coord": {
                                 "x": 0,
@@ -54,7 +53,7 @@ class MapControllerTest extends BaseIntegrationTestController {
                             }
                         },
                         {
-                            "id": "002",
+                            "id": "W02",
                             "avatar": "2",
                             "coord": {
                                 "x": 1,
@@ -62,7 +61,7 @@ class MapControllerTest extends BaseIntegrationTestController {
                             }
                         },
                         {
-                            "id": "003",
+                            "id": "W03",
                             "avatar": "3",
                             "coord": {
                                 "x": 0,
@@ -70,7 +69,7 @@ class MapControllerTest extends BaseIntegrationTestController {
                             }
                         },
                         {
-                            "id": "004",
+                            "id": "W04",
                             "avatar": "4",
                             "coord": {
                                 "x": 1,

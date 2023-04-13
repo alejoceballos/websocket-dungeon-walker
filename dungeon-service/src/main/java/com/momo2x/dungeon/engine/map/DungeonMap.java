@@ -2,7 +2,6 @@ package com.momo2x.dungeon.engine.map;
 
 import com.momo2x.dungeon.engine.actors.DungeonElement;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
-import com.momo2x.dungeon.engine.actors.DungeonWall;
 import com.momo2x.dungeon.engine.actors.ElementException;
 import com.momo2x.dungeon.engine.movement.DirectionType;
 import com.momo2x.dungeon.engine.movement.MovementException;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
-import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,9 +23,6 @@ public class DungeonMap {
 
     @Getter
     private final Map<DungeonCoord, DungeonCell> map;
-
-    @Getter
-    private final Set<DungeonWall> walls;
 
     @Getter
     private final Map<String, DungeonWalker> walkers;
@@ -45,7 +40,7 @@ public class DungeonMap {
     private static void validateEnterMapCell(final DungeonCoord coord, final DungeonCell cell) throws CellException {
         validateMapCell(coord, cell);
 
-        if (cell.getElement() != null && cell.getElement().isBlocker()) {
+        if (cell.isBlocked()) {
             throw new CellException("Cannot place element at %s. Already occupied".formatted(coord.toString()));
         }
     }
@@ -80,10 +75,10 @@ public class DungeonMap {
 
         log.info("Placing element '{}' at {}", element.getId(), cell.getCoord().toString());
 
-        cell.setElement(element);
+        cell.addElementToTop(element);
         element.setCell(cell);
 
-        if (element instanceof DungeonWalker walker && !this.walkers.containsValue(element)) {
+        if (element instanceof final DungeonWalker walker && !this.walkers.containsValue(element)) {
             this.walkers.put(walker.getId(), walker);
             walker.setCell(cell);
             walker.setPreviousCell(cell);
@@ -104,11 +99,11 @@ public class DungeonMap {
 
         validateMapCell(nextCoord, nextCell);
 
-        if (nextCell.getElement() == null || !nextCell.getElement().isBlocker()) {
+        if (!nextCell.isBlocked()) {
             final var currCell = walker.getCell();
 
-            nextCell.setElement(walker);
-            currCell.setElement(null);
+            nextCell.addElementToTop(walker);
+            currCell.removeTopElement();
 
             walker.setCell(nextCell);
             walker.setPreviousCell(currCell);

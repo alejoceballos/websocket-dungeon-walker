@@ -35,7 +35,4 @@ class DungeonElementTest {
         assertThat(autoWalker, not(equalTo(autoWalkerNotEqual)));
     }
 
-    @Test
-    void testHashCode() {
-    }
 }

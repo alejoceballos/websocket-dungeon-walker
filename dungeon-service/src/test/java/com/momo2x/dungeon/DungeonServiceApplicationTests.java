@@ -8,6 +8,7 @@ class DungeonServiceApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

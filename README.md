@@ -2,14 +2,14 @@
 
 🚧 *Under construction!*
 
-The goal is to create a RPG-like game where one or more users can walk through different dungeon scenarios
-facing a different set of adversities. 🎲🎮🕹️
+The goal is to create an RPG-like game where one or more users can walk through different dungeon scenarios facing a
+different set of adversities. 🎲🎮🕹️
 
 Currently, it's just a dream 💭.
 
 ## Current state
 
-<img src="README.files/v0.0.7-preview.gif" title="Version 0.0.6 Preview" alt="Version 0.0.7 Preview" height="50%" width="50%">
+<img src="README.files/v0.0.8-preview.gif" title="Version 0.0.8 Preview" alt="Version 0.0.8 Preview" height="50%" width="50%">
 
 ## 🙂 Motivation
 
@@ -45,9 +45,30 @@ mvn spring-boot:run
 
 ## 📈 Versions
 
-#### Version 0.0.7
+#### Version 0.0.8
+
+Now the map allows background images.
+
+To prevent from clearing the background image after a walker pass on it, each cell now can have more than one element
+at the same time. Which element is visible will depend on which element was set in the coordinate last. Also, to allow
+a more readable map editing, it will now be split in several file layers. Each file may have a set of elements, for
+example, the first layer (00) may have walls and blocking elements that cannot be moved or walked on, the second layer
+(01) may have the background elements that can be stepped on, like grass, sand, etc., and the third (02) layer will have
+the autonomous walkers (NPCs). Actually, there can be any map layers and element types can be mixed among these maps,
+but to simplify, I suggest separating maps by the type od elements it represents. Any coordinate filled with "###" or
+"   " will now be ignored, walls and empty spaces must hold its own identification. This was done to be easier to
+identify boundaries between layers. In case of any question, check files `resources/data/level01[0?].map` (where ? is
+the map layer).
+
+There are still some bugs regarding rendering again the layer when a walker step out of it, but it may be fixed in the
+future. In the future, the visibility priority will be set according to the layer the element is placed. Player
+characters should have set the highest priority. This way there will be possible to overlay elements in the map.
+
+#### Version 0.0.7 ([a8dfaef](https://github.com/alejoceballos/websocket-dungeon-walker/commit/a8dfaef749b5c8a1b1ee52aaddfc87010b71157c))
 
 Regardless the size of the dungeon the logged player's avatar will always be centered on the screen now.
+
+<img src="README.files/v0.0.7-preview.gif" title="Version 0.0.7 Preview" alt="Version 0.0.7 Preview" height="50%" width="50%">
 
 #### Version 0.0.6 ([1728b48d](https://github.com/alejoceballos/websocket-dungeon-walker/commit/1728b48d9bf3db5792302104027752957ca27739))
 
@@ -72,7 +93,7 @@ or `she` for a more interactive game.
 
 #### Version 0.0.3 ([62f1e70b](https://github.com/alejoceballos/websocket-dungeon-walker/commit/62f1e70b6ba31d8ace8edb41ea5d66eaf3f42280))
 
-Dungeon now has images! The walls are painted, and we have a beautiful zombie head bouncing all over! Also you can set
+Dungeon now has images! The walls are painted, and we have a beautiful zombie head bouncing all over! Also, you can set
 the speed of walkers from 1 to 10 now. Just set it in the data file.
 
 <img src="README.files/v0.0.3-preview.gif" title="Version 0.0.3 Preview" alt="Version 0.0.3 Preview" height="50%" width="50%">
@@ -109,7 +130,7 @@ and set a json file with their characteristics.
 ### Interchanging Messages
 
 There are two types of message exchanging in the system. A simples REST API that is used to load the dungeon
-characteristics and configurations (I won't go further on that, kindda self explanatory) and WebSockets used
+characteristics and configurations (I won't go further on that, kinda self-explanatory) and WebSockets used
 to manage communication between the server and the client enabling dynamic map updates its elements.
 
 ![Web Socket Architecture](README.files/websocket-architecture.png)

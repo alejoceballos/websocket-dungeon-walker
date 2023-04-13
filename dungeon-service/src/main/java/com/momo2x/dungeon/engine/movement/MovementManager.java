@@ -7,6 +7,8 @@ import com.momo2x.dungeon.engine.map.DungeonMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 public class MovementManager {
 
@@ -28,8 +30,9 @@ public class MovementManager {
 
         final var nextCoord = walker.getCoord().getCoordAt(walker.getDirection());
         final var nextCell = this.map.getCellAt(nextCoord);
+        final var nextCellElement = nextCell.getTopElement();
 
-        if (nextCell.getElement() != null && nextCell.getElement().isBlocker()) {
+        if (Objects.nonNull(nextCellElement) && nextCellElement.isBlocker()) {
             this.walker.setDirection(this.bounce.bounceDirection());
         }
 

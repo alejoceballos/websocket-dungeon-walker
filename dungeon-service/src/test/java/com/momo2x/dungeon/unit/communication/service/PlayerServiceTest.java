@@ -1,8 +1,8 @@
 package com.momo2x.dungeon.unit.communication.service;
 
 import com.momo2x.dungeon.communication.controller.out.DungeonUpdater;
-import com.momo2x.dungeon.communication.model.WalkerMapper;
-import com.momo2x.dungeon.communication.model.WalkerMapperImpl;
+import com.momo2x.dungeon.communication.model.ElementMapper;
+import com.momo2x.dungeon.communication.model.ElementMapperImpl;
 import com.momo2x.dungeon.communication.service.PlayerService;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.map.CellException;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@ComponentScan(basePackageClasses = {WalkerMapperImpl.class})
+@ComponentScan(basePackageClasses = {ElementMapperImpl.class})
 class PlayerServiceTest {
 
     @Mock
@@ -42,7 +42,7 @@ class PlayerServiceTest {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @Mock
-    private WalkerMapper mapper;
+    private ElementMapper mapper;
 
     @Spy
     @InjectMocks

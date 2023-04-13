@@ -1,7 +1,7 @@
 package com.momo2x.dungeon.unit.engine.movement;
 
+import com.momo2x.dungeon.engine.actors.DungeonElement;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
-import com.momo2x.dungeon.engine.actors.DungeonWall;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;
@@ -14,7 +14,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.momo2x.dungeon.engine.movement.DirectionType.*;
+import static com.momo2x.dungeon.engine.movement.DirectionType.E;
+import static com.momo2x.dungeon.engine.movement.DirectionType.N;
+import static com.momo2x.dungeon.engine.movement.DirectionType.NE;
+import static com.momo2x.dungeon.engine.movement.DirectionType.NW;
+import static com.momo2x.dungeon.engine.movement.DirectionType.S;
+import static com.momo2x.dungeon.engine.movement.DirectionType.SE;
+import static com.momo2x.dungeon.engine.movement.DirectionType.SW;
+import static com.momo2x.dungeon.engine.movement.DirectionType.W;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -76,22 +83,22 @@ class SimpleBounceStrategyTest {
     @ParameterizedTest
     @MethodSource("bounceStrategyParameters")
     void bounce(
-            final DirectionType direction,
-            final DungeonCoord bounceCoord,
-            final DirectionType bounceDirection,
+            final DirectionType currentWalkerDirection,
+            final DungeonCoord expectedBounceCoord,
+            final DirectionType expectedBounceDirection,
             final DungeonCoord[] wallCoords) {
-        final var strategy = createBounceStrategy(direction, bounceCoord, wallCoords);
-        assertThat(strategy.bounceDirection(), equalTo(bounceDirection));
+        final var strategy = createBounceStrategy(currentWalkerDirection, expectedBounceCoord, wallCoords);
+        assertThat(strategy.bounceDirection(), equalTo(expectedBounceDirection));
     }
 
     private BounceStrategy createBounceStrategy(
-            DirectionType direction,
+            DirectionType walkerDirection,
             DungeonCoord bounceTo,
             DungeonCoord... wallCoords
     ) {
         final var walker = mock(DungeonWalker.class);
 
-        when(walker.getDirection()).thenReturn(direction);
+        when(walker.getDirection()).thenReturn(walkerDirection);
         when(walker.getCoord()).thenReturn(new DungeonCoord(1, 1));
 
         final var map = mock(DungeonMap.class);
@@ -107,10 +114,7 @@ class SimpleBounceStrategyTest {
     }
 
     private DungeonCell getWallCell(final DungeonCoord coord) {
-        return DungeonCell.builder()
-                .coord(coord)
-                .element(new DungeonWall("", "", true))
-                .build();
+        return new DungeonCell(coord, new DungeonElement("", "", true));
     }
 
 }

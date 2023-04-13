@@ -4,7 +4,7 @@ import com.momo2x.dungeon.communication.model.CoordinateDto;
 import com.momo2x.dungeon.communication.model.ElementDto;
 import com.momo2x.dungeon.communication.model.MapMapper;
 import com.momo2x.dungeon.communication.model.MapMapperImpl;
-import com.momo2x.dungeon.engine.actors.DungeonWall;
+import com.momo2x.dungeon.engine.actors.DungeonElement;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;
@@ -28,15 +28,15 @@ public class MapMapperTest {
                     new DungeonCoord(0, 0),
                     new DungeonCell(
                             new DungeonCoord(0, 0),
-                            new DungeonWall("AAA", "A", true)));
+                            new DungeonElement("AAA", "A", true)));
             put(
                     new DungeonCoord(1, 1),
                     new DungeonCell(
                             new DungeonCoord(1, 1),
-                            new DungeonWall("BBB", "B", true)));
+                            new DungeonElement("BBB", "B", true)));
         }};
 
-        final var map = new DungeonMap(2, 3, source, null, null);
+        final var map = new DungeonMap(2, 3, source, null);
 
         final var expected = List.of(
                 new ElementDto("AAA", "A", new CoordinateDto(0, 0)),

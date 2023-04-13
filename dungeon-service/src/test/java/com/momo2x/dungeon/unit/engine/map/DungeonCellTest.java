@@ -27,7 +27,7 @@ class DungeonCellTest {
         return Stream.of(
                 arguments(new DungeonCell(null, elementBlocked), true),
                 arguments(new DungeonCell(null, elementNotBlocked), false),
-                arguments(new DungeonCell(null, null), false)
+                arguments(new DungeonCell(null), false)
         );
     }
 
@@ -45,10 +45,10 @@ class DungeonCellTest {
 
         return Stream.of(
                 arguments(
-                        new DungeonCell(null, null),
+                        new DungeonCell(null),
                         expectedResult.formatted(expectedNoCoord, expectedNoElem)),
                 arguments(
-                        new DungeonCell(coord, null),
+                        new DungeonCell(coord),
                         expectedResult.formatted(expectedCoord, expectedNoElem)),
                 arguments(
                         new DungeonCell(null, element),

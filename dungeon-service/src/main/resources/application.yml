@@ -6,5 +6,5 @@ logging:
           web: DEBUG
 dungeon:
   map:
-    map-file: /data/level01.map
-    data-file: /data/level01.json
+    map-files: /data/level01
+    data-file: /data/catalogue

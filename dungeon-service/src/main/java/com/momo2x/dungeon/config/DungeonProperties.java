@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "dungeon")
 public class DungeonProperties {
 
-    @Value("${dungeon.map.map-file}")
+    @Value("${dungeon.map.map-files}")
     @Getter
-    private String mapFile;
+    private String mapFilesPrefix;
 
     @Value("${dungeon.map.data-file}")
     @Getter
-    private String dataFile;
+    private String dataFilePrefix;
 
 }

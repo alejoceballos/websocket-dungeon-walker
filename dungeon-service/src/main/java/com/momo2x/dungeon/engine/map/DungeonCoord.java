@@ -2,6 +2,8 @@ package com.momo2x.dungeon.engine.map;
 
 import com.momo2x.dungeon.engine.movement.DirectionType;
 
+import java.util.Objects;
+
 import static com.momo2x.dungeon.engine.movement.DirectionType.EASTERN;
 import static com.momo2x.dungeon.engine.movement.DirectionType.NORTHERN;
 import static com.momo2x.dungeon.engine.movement.DirectionType.SOUTHERN;
@@ -10,7 +12,7 @@ import static com.momo2x.dungeon.engine.movement.DirectionType.WESTERN;
 public record DungeonCoord(int x, int y) {
 
     public DungeonCoord getCoordAt(final DirectionType direction) {
-        assert direction != null : "Direction cannot be null";
+        assert Objects.nonNull(direction) : "Direction cannot be null";
 
         int x = this.x;
         int y = this.y;

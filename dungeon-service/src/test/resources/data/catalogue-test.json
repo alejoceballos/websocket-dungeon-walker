@@ -1,0 +1,28 @@
+{
+  "E01": {
+    "type": "walkable"
+  },
+  "W01": {
+    "type": "blocking",
+    "blocker": true,
+    "avatar": "wall"
+  },
+  "D01": {
+    "type": "walkable",
+    "blocker": false,
+    "avatar": "sand"
+  },
+  "G01": {
+    "type": "walkable",
+    "blocker": false,
+    "avatar": "grass"
+  },
+  "001": {
+    "type": "walker",
+    "blocker": true,
+    "avatar": "skull",
+    "direction": "NE",
+    "speed": 5,
+    "bounce": "simple"
+  }
+}

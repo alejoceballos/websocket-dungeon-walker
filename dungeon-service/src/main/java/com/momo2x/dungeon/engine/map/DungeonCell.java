@@ -1,28 +1,49 @@
 package com.momo2x.dungeon.engine.map;
 
 import com.momo2x.dungeon.engine.actors.DungeonElement;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Stack;
 
 @Builder
-@RequiredArgsConstructor
-@AllArgsConstructor
 public class DungeonCell {
 
     @Getter
     private final DungeonCoord coord;
 
-    @Getter
-    @Setter
-    private DungeonElement element;
+    private final Stack<DungeonElement> elements = new Stack<>();
+
+    public DungeonCell(DungeonCoord coord) {
+        this.coord = coord;
+    }
+
+    public DungeonCell(DungeonCoord coord, DungeonElement... elements) {
+        this.coord = coord;
+        Arrays.stream(elements).forEach(this.elements::push);
+    }
+
+    public DungeonCell(DungeonCoord coord, Stack<DungeonElement> elements) {
+        this.coord = coord;
+        this.elements.addAll(elements);
+    }
+
+    public DungeonElement getTopElement() {
+        return this.elements.isEmpty() ? null : this.elements.peek();
+    }
+
+    public void addElementToTop(final DungeonElement element) {
+        this.elements.push(element);
+    }
+
+    public void removeTopElement() {
+        this.elements.pop();
+    }
 
     public boolean isBlocked() {
-        return this.element != null && this.element.isBlocker();
+        return this.elements.stream().anyMatch(DungeonElement::isBlocker);
     }
 
     @Override
@@ -30,7 +51,13 @@ public class DungeonCell {
         return "Cell " +
                 (this.coord == null ? "(?,?)" : this.coord) +
                 ": " +
-                (this.element == null ? "empty" : this.element.getId());
+                (this.elements.isEmpty()
+                        ? "empty"
+                        : this.elements.stream()
+                        .map(DungeonElement::getId)
+                        .reduce("", (result, current) -> result.isBlank()
+                                ? current
+                                : result + ", " + current));
     }
 
     @Override

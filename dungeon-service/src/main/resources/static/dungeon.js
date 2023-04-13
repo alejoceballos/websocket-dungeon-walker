@@ -128,18 +128,27 @@ const webSocketConnect = socket => {
     });
 };
 
-const reRender = walker => {
-    const {id, avatar, previous, current} = walker;
-    const previousId = getTdId(previous.x, previous.y)
-    const currentId = getTdId(current.x, current.y)
+const reRender = mapUpdate => {
+    const {id: walkerId, avatar: walkerAvatar, coord: walkerCoord} = mapUpdate.elements[0];
 
-    const avatarClass = `${avatar}-${calculateDirection(previous, current)}`;
+    const currentId = getTdId(walkerCoord.x, walkerCoord.y)
 
-    $(`#${previousId}`).removeClass();
+    let prevElemCoord = walkerCoord;
+
+    if (mapUpdate.elements.length > 1) {
+        const {avatar: prevElemAvatar, coord: prevElemCoord} = mapUpdate.elements[1];
+        const previousId = getTdId(prevElemCoord.x, prevElemCoord.y)
+        const previousElement = $(`#${previousId}`);
+
+        previousElement.removeClass();
+        previousElement.addClass(prevElemAvatar);
+    }
+
+    const avatarClass = `${walkerAvatar}-${calculateDirection(prevElemCoord, walkerCoord)}`;
     const currentElement = $(`#${currentId}`);
     currentElement.addClass(avatarClass);
 
-    if (id === storage.user) {
+    if (walkerId === storage.user) {
         currentElement[0].scrollIntoView({
             behavior: 'auto',
             block: 'center',
@@ -147,7 +156,7 @@ const reRender = walker => {
         });
     }
 
-    setMessage(`[${id}] From (${previous.x},${previous.y}) to (${current.x},${current.y})`);
+    setMessage(`[${walkerId}] From (${prevElemCoord.x},${prevElemCoord.y}) to (${walkerCoord.x},${walkerCoord.y})`);
 };
 
 const getTdId = (x, y) => `coord-${x}-${y}`;

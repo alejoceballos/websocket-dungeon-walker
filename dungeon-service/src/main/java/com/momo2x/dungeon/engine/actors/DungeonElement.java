@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.Objects;
 
 @RequiredArgsConstructor
-public abstract class DungeonElement {
+public class DungeonElement {
 
     @Getter
     private final String id;

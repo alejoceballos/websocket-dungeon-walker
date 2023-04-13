@@ -1,9 +1,0 @@
-{
-  "id": {
-    "type": "type",
-    "blocker": true,
-    "avatar": "avatar",
-    "direction": "direction",
-    "bounce": "bounce"
-  }
-}
