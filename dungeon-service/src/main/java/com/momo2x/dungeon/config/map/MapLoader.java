@@ -7,7 +7,6 @@ import org.springframework.util.StringUtils;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 public class MapLoader {
@@ -23,8 +22,9 @@ public class MapLoader {
         return idx == 0;
     }
 
-    public Map<String, List<DungeonCoord>> load() throws MalformedMapException {
-        final var map = new HashMap<String, List<DungeonCoord>>();
+    public MapMetadata load() throws MalformedMapException {
+        final var elementsCoords = new HashMap<String, List<DungeonCoord>>();
+        final var elementsLayers = new HashMap<String, Integer>();
 
         var previousMapColumnAmount = -1;
         var currentMapColumnAmount = -1;
@@ -72,10 +72,11 @@ public class MapLoader {
                         continue;
                     }
 
-                    final var coordList = map.getOrDefault(cellId, new LinkedList<>());
+                    final var coordList = elementsCoords.getOrDefault(cellId, new LinkedList<>());
 
                     coordList.add(new DungeonCoord(x, y));
-                    map.put(cellId, coordList);
+                    elementsCoords.put(cellId, coordList);
+                    elementsLayers.put(cellId, mapIdx);
                 }
 
                 validateColumnsAmount(currentMapColumnAmount, x + 1);
@@ -88,7 +89,7 @@ public class MapLoader {
             }
         }
 
-        return map;
+        return new MapMetadata(elementsCoords, elementsLayers);
     }
 
     private boolean isIgnorableContent(final String cellId) {

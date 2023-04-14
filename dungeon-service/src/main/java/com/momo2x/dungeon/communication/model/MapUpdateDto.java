@@ -15,4 +15,11 @@ public record MapUpdateDto(ElementDto... elements) {
     public int hashCode() {
         return Arrays.hashCode(elements);
     }
+
+    @Override
+    public String toString() {
+        return "MapUpdateDto{" +
+                "elements=" + Arrays.toString(elements) +
+                '}';
+    }
 }

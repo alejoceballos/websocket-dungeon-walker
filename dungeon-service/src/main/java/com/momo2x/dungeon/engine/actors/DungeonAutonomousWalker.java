@@ -18,10 +18,11 @@ public class DungeonAutonomousWalker extends DungeonWalker {
             final String id,
             final String avatar,
             final boolean blocker,
+            final int layerIndex,
             final DirectionType direction,
             final int speed,
             final BounceStrategyType bounceStrategy) {
-        super(id, avatar, blocker, direction);
+        super(id, avatar, blocker, layerIndex, direction);
         this.speed = speed;
         this.bounceStrategy = bounceStrategy;
     }

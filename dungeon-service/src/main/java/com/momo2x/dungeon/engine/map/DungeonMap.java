@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
+import static java.util.Objects.isNull;
+
 @Slf4j
 @RequiredArgsConstructor
 public class DungeonMap {
@@ -20,6 +22,9 @@ public class DungeonMap {
 
     @Getter
     private final int height;
+
+    @Getter
+    private final int numOfLayers;
 
     @Getter
     private final Map<DungeonCoord, DungeonCell> map;
@@ -32,7 +37,7 @@ public class DungeonMap {
     }
 
     private static void validateWalkerDirection(final DirectionType direction) throws MovementException {
-        if (direction == null) {
+        if (isNull(direction)) {
             throw new MovementException("No direction given");
         }
     }
@@ -46,19 +51,19 @@ public class DungeonMap {
     }
 
     private static void validateMapCell(final DungeonCoord coord, final DungeonCell cell) throws CellException {
-        if (cell == null) {
+        if (isNull(cell)) {
             throw new CellException("No cell in coordinates %s".formatted(coord.toString()));
         }
     }
 
     private static void validateMapElement(final DungeonElement element) throws ElementException {
-        if (element == null) {
+        if (isNull(element)) {
             throw new ElementException(
                     "It is not possible to place a null element",
                     new IllegalArgumentException("Element cannot be null"));
         }
 
-        if (element.getId() == null) {
+        if (isNull(element.getId())) {
             throw new ElementException("Elements must have an ID. For walkers, this ID must be unique");
         }
     }
@@ -115,6 +120,10 @@ public class DungeonMap {
     }
 
     private void validateWalkerId(final String id) throws MovementException {
+        if (isNull(id)) {
+            throw new MovementException("ID is null!!! Can't move a walker with no ID");
+        }
+
         if (id.isBlank()) {
             throw new MovementException("Can't move a walker without and ID");
         }
@@ -125,7 +134,7 @@ public class DungeonMap {
     }
 
     private void validateMapCoordinate(final DungeonCoord coord) throws CoordinateException {
-        if (coord == null) {
+        if (isNull(coord)) {
             throw new CoordinateException(
                     "It is not possible to have null coordinates in the map",
                     new IllegalArgumentException("Element cannot be null"));

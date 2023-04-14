@@ -4,9 +4,11 @@ import com.momo2x.dungeon.engine.actors.DungeonElement;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Stack;
+
+import static java.util.Arrays.stream;
+import static java.util.Objects.isNull;
 
 @Builder
 public class DungeonCell {
@@ -22,7 +24,7 @@ public class DungeonCell {
 
     public DungeonCell(DungeonCoord coord, DungeonElement... elements) {
         this.coord = coord;
-        Arrays.stream(elements).forEach(this.elements::push);
+        stream(elements).forEach(this.elements::push);
     }
 
     public DungeonCell(DungeonCoord coord, Stack<DungeonElement> elements) {
@@ -49,7 +51,7 @@ public class DungeonCell {
     @Override
     public String toString() {
         return "Cell " +
-                (this.coord == null ? "(?,?)" : this.coord) +
+                (isNull(this.coord) ? "(?,?)" : this.coord) +
                 ": " +
                 (this.elements.isEmpty()
                         ? "empty"

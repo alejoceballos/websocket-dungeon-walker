@@ -46,13 +46,14 @@ class DungeonUpdaterTest {
         walker.setPreviousCell(previousElement.getCell());
         walker.setCell(new DungeonCell(new DungeonCoord(1, 1)));
 
-        new DungeonUpdater(messageTemplate, mapper).broadcast(walker);
+        new DungeonUpdater(this.messageTemplate, this.mapper).broadcast(walker);
 
-        verify(messageTemplate).convertAndSend(destinationCaptor.capture(), mapUpdateDtoCaptor.capture());
+        verify(this.messageTemplate)
+                .convertAndSend(this.destinationCaptor.capture(), this.mapUpdateDtoCaptor.capture());
 
         assertThat(
                 SIMPLE_BROKER_DESTINATION,
-                equalTo(destinationCaptor.getValue()));
+                equalTo(this.destinationCaptor.getValue()));
         assertThat(
                 new MapUpdateDto(
                         new ElementDto(
@@ -60,14 +61,16 @@ class DungeonUpdaterTest {
                                 walker.getAvatar(),
                                 new CoordinateDto(
                                         walker.getCell().getCoord().x(),
-                                        walker.getCell().getCoord().y())),
+                                        walker.getCell().getCoord().y()),
+                                2),
                         new ElementDto(
                                 previousElement.getId(),
                                 previousElement.getAvatar(),
                                 new CoordinateDto(
                                         previousElement.getCell().getCoord().x(),
-                                        previousElement.getCell().getCoord().y()))),
-                equalTo(mapUpdateDtoCaptor.getValue()));
+                                        previousElement.getCell().getCoord().y()),
+                                1)),
+                equalTo(this.mapUpdateDtoCaptor.getValue()));
     }
 
 }

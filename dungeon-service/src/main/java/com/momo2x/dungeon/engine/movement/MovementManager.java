@@ -7,7 +7,7 @@ import com.momo2x.dungeon.engine.map.DungeonMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Objects;
+import static java.util.Objects.nonNull;
 
 @RequiredArgsConstructor
 public class MovementManager {
@@ -32,10 +32,9 @@ public class MovementManager {
         final var nextCell = this.map.getCellAt(nextCoord);
         final var nextCellElement = nextCell.getTopElement();
 
-        if (Objects.nonNull(nextCellElement) && nextCellElement.isBlocker()) {
+        if (nonNull(nextCellElement) && nextCellElement.isBlocker()) {
             this.walker.setDirection(this.bounce.bounceDirection());
         }
-
     }
 
     public long calculateSleepTme() {

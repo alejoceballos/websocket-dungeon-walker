@@ -114,7 +114,7 @@ class SimpleBounceStrategyTest {
     }
 
     private DungeonCell getWallCell(final DungeonCoord coord) {
-        return new DungeonCell(coord, new DungeonElement("", "", true));
+        return new DungeonCell(coord, new DungeonElement("", "", true, 0));
     }
 
 }

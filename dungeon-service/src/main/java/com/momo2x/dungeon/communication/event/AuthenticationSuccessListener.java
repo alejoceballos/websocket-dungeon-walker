@@ -27,14 +27,18 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
         final var user = userDetails.getUsername();
 
         try {
-            final var walker = new DungeonWalker(user, "%s-img".formatted(user), true, E);
-
+            final var walker = new DungeonWalker(
+                    user,
+                    "%s-img".formatted(user),
+                    true,
+                    this.map.getNumOfLayers(),
+                    E);
 
             this.map.placeElement(
                     walker,
                     user.equals("he") ? new DungeonCoord(1, 3) : new DungeonCoord(1, 1));
 
-            updater.broadcast(walker);
+            this.updater.broadcast(walker);
 
         } catch (DungeonException e) {
             throw new RuntimeException(e);

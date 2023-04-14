@@ -7,10 +7,11 @@ import com.momo2x.dungeon.communication.model.ElementMapperImpl;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
-import com.momo2x.dungeon.engine.movement.DirectionType;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+
+import static com.momo2x.dungeon.engine.movement.DirectionType.E;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 class ElementMapperTest {
 
@@ -18,12 +19,12 @@ class ElementMapperTest {
 
     @Test
     void toDto() {
-        final var walker = new DungeonWalker("id", "avatar", true, DirectionType.E);
+        final var walker = new DungeonWalker("id", "avatar", true, 3, E);
         walker.setCell(new DungeonCell(new DungeonCoord(1, 1)));
 
-        final var expected = new ElementDto("id", "avatar", new CoordinateDto(1, 1));
+        final var expected = new ElementDto("id", "avatar", new CoordinateDto(1, 1), 3);
 
-        MatcherAssert.assertThat(mapper.toDto(walker), Matchers.equalTo(expected));
+        assertThat(this.mapper.toDto(walker), equalTo(expected));
     }
 
 }

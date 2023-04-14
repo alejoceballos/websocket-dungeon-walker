@@ -3,15 +3,11 @@ package com.momo2x.dungeon.unit.engine;
 import com.momo2x.dungeon.communication.controller.out.DungeonUpdater;
 import com.momo2x.dungeon.engine.DungeonEngine;
 import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
-import com.momo2x.dungeon.engine.map.DungeonCell;
-import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;
 import com.momo2x.dungeon.engine.movement.SimpleBounceStrategy;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 import static com.momo2x.dungeon.unit.MapTestUtil.mockDungeonMap;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,14 +22,12 @@ class DungeonEngineTest {
 
     private DungeonMap mapMock;
 
-    private Map<DungeonCoord, DungeonCell> mapCellsMock;
-
     private DungeonAutonomousWalker dungeonAutoWalkerMock;
 
     @BeforeEach
     void setUpMock() {
         this.mapMock = mockDungeonMap.get();
-        this.dungeonAutoWalkerMock = (DungeonAutonomousWalker) mapMock
+        this.dungeonAutoWalkerMock = (DungeonAutonomousWalker) this.mapMock
                 .getWalkers()
                 .values()
                 .stream()

@@ -28,22 +28,22 @@ public class MapMapperTest {
                     new DungeonCoord(0, 0),
                     new DungeonCell(
                             new DungeonCoord(0, 0),
-                            new DungeonElement("AAA", "A", true)));
+                            new DungeonElement("AAA", "A", true, 0)));
             put(
                     new DungeonCoord(1, 1),
                     new DungeonCell(
                             new DungeonCoord(1, 1),
-                            new DungeonElement("BBB", "B", true)));
+                            new DungeonElement("BBB", "B", true, 1)));
         }};
 
-        final var map = new DungeonMap(2, 3, source, null);
+        final var map = new DungeonMap(2, 3, 1, source, null);
 
         final var expected = List.of(
-                new ElementDto("AAA", "A", new CoordinateDto(0, 0)),
-                new ElementDto("BBB", "B", new CoordinateDto(1, 1))
+                new ElementDto("AAA", "A", new CoordinateDto(0, 0), 0),
+                new ElementDto("BBB", "B", new CoordinateDto(1, 1), 1)
         );
 
-        final var actual = mapper.toDto(map);
+        final var actual = this.mapper.toDto(map);
 
         assertThat(actual.width(), equalTo(2));
         assertThat(actual.height(), equalTo(3));

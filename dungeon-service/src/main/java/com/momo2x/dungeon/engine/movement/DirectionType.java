@@ -6,6 +6,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public enum DirectionType {
+
     N("North", "S"),
     NE("Northeast", "SW"),
     E("East", "W"),
@@ -32,4 +33,5 @@ public enum DirectionType {
     public String toString() {
         return this.description;
     }
+
 }

@@ -19,7 +19,7 @@ public class MapController {
 
     @GetMapping
     public MapDto getMap() {
-        return mapper.toDto(service.getMap());
+        return this.mapper.toDto(this.service.getMap());
     }
 
 }

@@ -12,27 +12,27 @@ import static org.hamcrest.Matchers.not;
 
 class DungeonElementTest {
 
-    final DungeonWalker walker = new DungeonWalker("id", "avatar", true, E);
-    final DungeonAutonomousWalker autoWalker = new DungeonAutonomousWalker("id", "avatar", true, E, 10, null);
+    private final DungeonWalker walker = new DungeonWalker("id", "avatar", true, 0, E);
+    private final DungeonAutonomousWalker autoWalker = new DungeonAutonomousWalker("id", "avatar", true, 1, E, 10, null);
 
     @Test
     void testEquals() {
-        final var walkerEqual = new DungeonWalker("id", "diff avatar", false, W);
-        assertThat(walkerEqual, equalTo(walker));
+        final var walkerEqual = new DungeonWalker("id", "diff avatar", false, 99, W);
+        assertThat(walkerEqual, equalTo(this.walker));
 
-        final var autoWalkerEqual = new DungeonAutonomousWalker("id", "diff avatar", false, W, 1, null);
-        assertThat(autoWalker, equalTo(autoWalkerEqual));
+        final var autoWalkerEqual = new DungeonAutonomousWalker("id", "diff avatar", false, 98, W, 1, null);
+        assertThat(this.autoWalker, equalTo(autoWalkerEqual));
     }
 
     @Test
     void testNotEquals() {
-        assertThat(walker, not(equalTo(autoWalker)));
+        assertThat(this.walker, not(equalTo(this.autoWalker)));
 
-        final var walkerNotEqual = new DungeonWalker("diff id", "avatar", true, E);
-        assertThat(walkerNotEqual, not(equalTo(walker)));
+        final var walkerNotEqual = new DungeonWalker("diff id", "avatar", true, 0, E);
+        assertThat(walkerNotEqual, not(equalTo(this.walker)));
 
-        final var autoWalkerNotEqual = new DungeonAutonomousWalker("diff id", "avatar", true, E, 10, null);
-        assertThat(autoWalker, not(equalTo(autoWalkerNotEqual)));
+        final var autoWalkerNotEqual = new DungeonAutonomousWalker("diff id", "avatar", true, 1, E, 10, null);
+        assertThat(this.autoWalker, not(equalTo(autoWalkerNotEqual)));
     }
 
 }

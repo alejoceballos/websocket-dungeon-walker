@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
+import static java.util.Objects.isNull;
+
 @Controller
 @RequiredArgsConstructor
 public class PlayerController {
@@ -18,18 +20,18 @@ public class PlayerController {
 
     @MessageMapping("/move")
     public void move(final MovementDto movementDto, final Authentication auth) {
-        if (auth == null) {
+        if (isNull(auth)) {
             throw new RuntimeException("No authenticated user");
         }
 
-        if (movementDto == null || movementDto.direction() == null || movementDto.direction().isBlank()) {
+        if (isNull(movementDto) || isNull(movementDto.direction()) || movementDto.direction().isBlank()) {
             throw new RuntimeException("No direction to go");
         }
 
         try {
             final var user = (UserDetails) auth.getPrincipal();
 
-            service.move(
+            this.service.move(
                     user.getUsername(),
                     DirectionType.valueOf(movementDto.direction().toUpperCase()));
 

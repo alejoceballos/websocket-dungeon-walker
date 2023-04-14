@@ -27,15 +27,16 @@ class MapControllerTest extends BaseIntegrationTestController {
     private static final DungeonMap MOCKED_MAP = new DungeonMap(
             2,
             2,
+            1,
             Map.of(
                     new DungeonCoord(0, 0),
-                    new DungeonCell(new DungeonCoord(0, 0), new DungeonElement("W01", "1", true)),
+                    new DungeonCell(new DungeonCoord(0, 0), new DungeonElement("W01", "1", true, 0)),
                     new DungeonCoord(1, 0),
-                    new DungeonCell(new DungeonCoord(1, 0), new DungeonElement("W02", "2", true)),
+                    new DungeonCell(new DungeonCoord(1, 0), new DungeonElement("W02", "2", true, 0)),
                     new DungeonCoord(0, 1),
-                    new DungeonCell(new DungeonCoord(0, 1), new DungeonElement("W03", "3", true)),
+                    new DungeonCell(new DungeonCoord(0, 1), new DungeonElement("W03", "3", true, 0)),
                     new DungeonCoord(1, 1),
-                    new DungeonCell(new DungeonCoord(1, 1), new DungeonElement("W04", "4", true))
+                    new DungeonCell(new DungeonCoord(1, 1), new DungeonElement("W04", "4", true, 0))
             ),
             null);
 
@@ -87,7 +88,7 @@ class MapControllerTest extends BaseIntegrationTestController {
 
     @Test
     void getMap() throws Exception {
-        mockMvc.perform(
+        this.mockMvc.perform(
                         get("/v1/maps")
                                 .with(httpBasic(USERNAME, PASSWORD)))
                 .andExpectAll(

@@ -24,13 +24,13 @@ public class DungeonUpdater {
     public void broadcast(final DungeonWalker walker) {
         final List<ElementDto> elements = new ArrayList<>();
 
-        elements.add(mapper.toDto(walker));
+        elements.add(this.mapper.toDto(walker));
 
         if (walker.isMoving()) {
-            elements.add(mapper.toDto(walker.getPreviousCell().getTopElement()));
+            elements.add(this.mapper.toDto(walker.getPreviousCell().getTopElement()));
         }
 
-        simpMessagingTemplate.convertAndSend(
+        this.simpMessagingTemplate.convertAndSend(
                 SIMPLE_BROKER_DESTINATION,
                 new MapUpdateDto(elements.toArray(new ElementDto[0])));
     }

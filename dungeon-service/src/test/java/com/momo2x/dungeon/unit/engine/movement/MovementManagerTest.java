@@ -45,7 +45,7 @@ class MovementManagerTest {
 
     @AfterEach
     void resetMock() {
-        reset(walker);
+        reset(this.walker);
     }
 
     @ParameterizedTest
@@ -54,7 +54,7 @@ class MovementManagerTest {
         when(this.walker.getSpeed()).thenReturn(speed);
 
         assertThat(
-                new MovementManager(null, walker, null).calculateSleepTme(),
+                new MovementManager(null, this.walker, null).calculateSleepTme(),
                 equalTo(sleepTime));
     }
 

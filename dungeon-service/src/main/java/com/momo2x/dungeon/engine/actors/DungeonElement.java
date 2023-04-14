@@ -20,6 +20,9 @@ public class DungeonElement {
     private final boolean blocker;
 
     @Getter
+    private final int layerIndex;
+
+    @Getter
     @Setter
     protected DungeonCell cell;
 

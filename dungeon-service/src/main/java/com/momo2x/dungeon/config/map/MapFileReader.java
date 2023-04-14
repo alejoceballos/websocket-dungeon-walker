@@ -10,13 +10,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import static java.util.Arrays.stream;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.regex.Pattern.matches;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,7 +34,7 @@ public class MapFileReader {
             final var mapAsStringList = new LinkedList<String>();
 
             String line;
-            while (Objects.nonNull(line = reader.readLine())) {
+            while (nonNull(line = reader.readLine())) {
                 mapAsStringList.add(line.stripTrailing());
             }
 
@@ -59,7 +62,7 @@ public class MapFileReader {
         log.info("Reading '{}' with elements information", dataFile);
 
         try (final var input = this.getClass().getResourceAsStream(dataFile)) {
-            if (Objects.isNull(input)) {
+            if (isNull(input)) {
                 throw new IOException("'%s' not found?".formatted(dataFile));
             }
 
@@ -67,7 +70,7 @@ public class MapFileReader {
                 final var builder = new StringBuilder();
 
                 String line;
-                while (Objects.nonNull(line = reader.readLine())) {
+                while (nonNull(line = reader.readLine())) {
                     builder.append(line.trim());
                 }
 
@@ -89,14 +92,14 @@ public class MapFileReader {
         final var filePattern = "%s\\[[0-9][0-9]\\].map".formatted(fileNamePrefix);
         final var resourcePath = this.getClass().getResource(pathName);
 
-        if (Objects.isNull(resourcePath)) {
+        if (isNull(resourcePath)) {
             throw new DataFileReaderException("No map folder '%s' was found".formatted(pathName));
         }
 
         final var filteredFiles =
-                new File(resourcePath.toURI()).listFiles(file -> Pattern.matches(filePattern, file.getName()));
+                new File(resourcePath.toURI()).listFiles(file -> matches(filePattern, file.getName()));
 
-        return Arrays.stream(Objects.requireNonNull(filteredFiles)).sorted(File::compareTo);
+        return stream(Objects.requireNonNull(filteredFiles)).sorted(File::compareTo);
     }
 
 }

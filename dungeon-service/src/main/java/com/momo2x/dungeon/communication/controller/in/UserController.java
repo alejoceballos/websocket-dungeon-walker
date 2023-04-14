@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/current")
     public UserDto getCurrent() {
-        return mapper.toDto(service.getLoggedUser());
+        return this.mapper.toDto(this.service.getLoggedUser());
     }
 
 }

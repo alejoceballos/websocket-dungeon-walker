@@ -8,6 +8,7 @@ import java.util.Set;
 public record MapDto(
         int width,
         int height,
+        int numOfLayers,
         Set<ElementDto> elements
 ) {
 }

@@ -22,8 +22,9 @@ public class DungeonWalker extends DungeonElement {
             final String id,
             final String avatar,
             final boolean blocker,
+            final int layerIndex,
             final DirectionType direction) {
-        super(id, avatar, blocker);
+        super(id, avatar, blocker, layerIndex);
         this.direction = direction;
     }
 

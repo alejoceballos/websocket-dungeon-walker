@@ -17,6 +17,7 @@ import static com.momo2x.dungeon.engine.movement.DirectionType.SE;
 import static com.momo2x.dungeon.engine.movement.DirectionType.SW;
 import static com.momo2x.dungeon.engine.movement.DirectionType.W;
 import static com.momo2x.dungeon.engine.movement.DirectionType.WESTERN;
+import static java.util.Objects.isNull;
 
 @RequiredArgsConstructor
 public class SimpleBounceStrategy implements BounceStrategy {
@@ -58,7 +59,7 @@ public class SimpleBounceStrategy implements BounceStrategy {
             nextDirection = getNextDirectionOptions(W.getOpposite());
         }
 
-        return nextDirection == null ? tryEachCoordinateOrGiveUp() : nextDirection;
+        return isNull(nextDirection) ? tryEachCoordinateOrGiveUp() : nextDirection;
     }
 
     private DirectionType getNextDirectionOptions(final DirectionType... directionOptions) {
@@ -83,6 +84,7 @@ public class SimpleBounceStrategy implements BounceStrategy {
 
         final var clockwiseCoordinates = List.of(N, NE, E, SE, S, SW, W, NW);
         final var antiClockwiseCoordinates = List.of(N, NW, W, SW, S, SE, E, NE);
+
         List<DirectionType> orderedDirections;
 
         if (EASTERN.contains(direction)) {
@@ -117,4 +119,5 @@ public class SimpleBounceStrategy implements BounceStrategy {
 
         return direction;
     }
+
 }

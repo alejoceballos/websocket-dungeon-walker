@@ -9,8 +9,9 @@ import org.mapstruct.Named;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
+
+import static java.util.Optional.ofNullable;
 
 @Mapper(componentModel = "spring")
 public interface MapMapper {
@@ -20,16 +21,14 @@ public interface MapMapper {
         final var elements = new HashSet<ElementDto>();
 
         for (var mapEntry : map.entrySet()) {
-            final var coord = mapEntry.getKey();
-            final var element = mapEntry.getValue().getTopElement();
-
-            if (Objects.nonNull(element)) {
-                elements.add(
-                        new ElementDto(
-                                element.getId(),
-                                element.getAvatar(),
-                                new CoordinateDto(coord.x(), coord.y())));
-            }
+            ofNullable(mapEntry.getValue().getTopElement())
+                    .ifPresent(elem ->
+                            elements.add(
+                                    new ElementDto(
+                                            elem.getId(),
+                                            elem.getAvatar(),
+                                            new CoordinateDto(mapEntry.getKey().x(), mapEntry.getKey().y()),
+                                            elem.getLayerIndex())));
         }
 
         return elements;

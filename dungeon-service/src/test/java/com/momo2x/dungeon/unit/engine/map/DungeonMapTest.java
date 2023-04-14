@@ -40,7 +40,7 @@ class DungeonMapTest {
         final var cell = this.map.getCellAt(new DungeonCoord(2, 1));
         assertThat(cell.getTopElement().getId(), equalTo("D01"));
 
-        final var walker = new DungeonWalker("id", "avatar", true, E);
+        final var walker = new DungeonWalker("id", "avatar", true, 3, E);
         this.map.placeElement(walker, new DungeonCoord(2, 1));
 
         assertThat(cell.getTopElement(), equalTo(walker));
@@ -58,7 +58,7 @@ class DungeonMapTest {
     void placeAndMoveToWall() throws ElementException, CellException, CoordinateException, MovementException {
         final var cell = this.map.getCellAt(new DungeonCoord(4, 1));
 
-        final var walker = new DungeonWalker("id", "avatar", true, E);
+        final var walker = new DungeonWalker("id", "avatar", true, 3, E);
         this.map.placeElement(walker, new DungeonCoord(4, 1));
 
         final var nextCell = this.map.getCellAt(new DungeonCoord(5, 1));

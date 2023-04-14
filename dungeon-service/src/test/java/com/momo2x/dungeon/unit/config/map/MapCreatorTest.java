@@ -5,8 +5,8 @@ import com.momo2x.dungeon.config.map.MalformedMapException;
 import com.momo2x.dungeon.config.map.MapCreator;
 import org.junit.jupiter.api.Test;
 
-import static com.momo2x.dungeon.unit.MapTestUtil.mockLoadedMap;
 import static com.momo2x.dungeon.unit.MapTestUtil.mockMapCells;
+import static com.momo2x.dungeon.unit.MapTestUtil.mockMapMetadata;
 import static com.momo2x.dungeon.unit.MapTestUtil.mockMapWalkers;
 import static com.momo2x.dungeon.unit.MapTestUtil.mockUploadedCatalogue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,7 +17,7 @@ class MapCreatorTest {
 
     @Test
     void create() throws MalformedMapException, MalformedCatalogueException {
-        final var dungeonMap = new MapCreator(mockLoadedMap.get(), mockUploadedCatalogue.get()).create();
+        final var dungeonMap = new MapCreator(mockMapMetadata.get(), mockUploadedCatalogue.get()).create();
 
         assertThat(dungeonMap.getWidth(), equalTo(6));
         assertThat(dungeonMap.getHeight(), equalTo(5));

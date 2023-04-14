@@ -67,12 +67,12 @@ class UserControllerTest extends BaseIntegrationTestController {
 
     @BeforeEach
     void mockService() {
-        when(userService.getLoggedUser()).thenReturn(MOCKED_USER_DETAILS);
+        when(this.userService.getLoggedUser()).thenReturn(MOCKED_USER_DETAILS);
     }
 
     @Test
     void getCurrent() throws Exception {
-        mockMvc.perform(
+        this.mockMvc.perform(
                         get("/v1/users/current")
                                 .with(httpBasic(USERNAME, PASSWORD)))
                 .andExpectAll(

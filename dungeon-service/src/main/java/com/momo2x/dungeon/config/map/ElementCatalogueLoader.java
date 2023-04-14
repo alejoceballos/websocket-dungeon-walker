@@ -20,7 +20,7 @@ public class ElementCatalogueLoader {
         try {
             return new ObjectMapper()
                     .readValue(
-                            jsonData,
+                            this.jsonData,
                             new TypeReference<>() {
                             });
         } catch (JsonProcessingException e) {

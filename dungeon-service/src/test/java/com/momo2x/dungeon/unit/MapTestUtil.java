@@ -1,6 +1,7 @@
 package com.momo2x.dungeon.unit;
 
 import com.momo2x.dungeon.config.map.CatalogueItem;
+import com.momo2x.dungeon.config.map.MapMetadata;
 import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
 import com.momo2x.dungeon.engine.actors.DungeonElement;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
@@ -52,8 +53,7 @@ public class MapTestUtil {
             mockRawMap01.get(),
             mockRawMap02.get());
 
-
-    public static final Supplier<Map<String, List<DungeonCoord>>> mockLoadedMap = () -> Map.of(
+    public static final Supplier<Map<String, List<DungeonCoord>>> mockMapElementsCoords = () -> Map.of(
             "E01", new ArrayList<>() {{
                 // Line 3
                 add(new DungeonCoord(4, 2));
@@ -109,6 +109,18 @@ public class MapTestUtil {
                 add(new DungeonCoord(2, 2));
             }});
 
+    public static final Supplier<Map<String, Integer>> mockElementsLayers = () -> Map.of(
+            "E01", 1,
+            "W01", 0,
+            "D01", 1,
+            "G01", 1,
+            "001", 2);
+
+    public static final Supplier<MapMetadata> mockMapMetadata = () -> new MapMetadata(
+            mockMapElementsCoords.get(),
+            mockElementsLayers.get()
+    );
+
     public static final String RAW_CATALOGUE = """
                 {
                   "E01": {
@@ -149,16 +161,16 @@ public class MapTestUtil {
             "001", new CatalogueItem("walker", true, "skull", "NE", 5, "simple")
     );
 
-    public static final Supplier<DungeonElement> mockDungeonWall = () -> new DungeonElement("W01", "wall", true);
+    public static final Supplier<DungeonElement> mockDungeonWall = () -> new DungeonElement("W01", "wall", true, 0);
 
-    public static final Supplier<DungeonElement> mockDungeonEmpty = () -> new DungeonElement("E01", null, false);
+    public static final Supplier<DungeonElement> mockDungeonEmpty = () -> new DungeonElement("E01", null, false, 1);
 
-    public static final Supplier<DungeonElement> mockDungeonDesert = () -> new DungeonElement("D01", "sand", false);
+    public static final Supplier<DungeonElement> mockDungeonDesert = () -> new DungeonElement("D01", "sand", false, 1);
 
-    public static final Supplier<DungeonElement> mockDungeonGrass = () -> new DungeonElement("G01", "grass", false);
+    public static final Supplier<DungeonElement> mockDungeonGrass = () -> new DungeonElement("G01", "grass", false, 1);
 
     public static final Supplier<DungeonAutonomousWalker> mockDungeonAutoWalker = () ->
-            new DungeonAutonomousWalker("001", "skull", true, NE, 5, SIMPLE);
+            new DungeonAutonomousWalker("001", "skull", true, 2, NE, 5, SIMPLE);
 
     public static final Supplier<Map<DungeonCoord, DungeonCell>> mockMapCells = () ->
             new HashMap<>() {{
@@ -210,7 +222,7 @@ public class MapTestUtil {
 
         dungeonAutoWalkerElement.setCell(dungeonAutoWalkerCell);
 
-        return new DungeonMap(6, 5, mapCellsMock, mapWalkersMock);
+        return new DungeonMap(6, 5, mockRawMaps.get().size(), mapCellsMock, mapWalkersMock);
     };
     public static final Supplier<Map<String, DungeonWalker>> mockMapWalkers = () -> {
         final var dungeonAutoWalkerMock = mockDungeonAutoWalker.get();

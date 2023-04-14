@@ -8,8 +8,6 @@ import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.map.CellException;
 import com.momo2x.dungeon.engine.map.DungeonMap;
 import com.momo2x.dungeon.engine.movement.MovementException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +22,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import static com.momo2x.dungeon.engine.movement.DirectionType.E;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.reset;
@@ -75,7 +75,7 @@ class PlayerServiceTest {
         new PlayerService(this.map, this.updater).move("id", E);
 
         verify(this.updater).broadcast(this.walkerCaptor.capture());
-        MatcherAssert.assertThat(this.walkerCaptor.getValue(), Matchers.equalTo(this.walker));
+        assertThat(this.walkerCaptor.getValue(), equalTo(this.walker));
 
         verify(this.updater, times(1)).broadcast(this.walker);
     }
