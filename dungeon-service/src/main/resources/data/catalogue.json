@@ -103,7 +103,7 @@
     "blocker": true,
     "avatar": "he-zombie-img",
     "direction": "NE",
-    "speed": 5,
+    "speed": 6,
     "bounce": "simple"
   },
   "002": {
@@ -111,7 +111,7 @@
     "blocker": true,
     "avatar": "she-zombie-img",
     "direction": "SW",
-    "speed": 4,
+    "speed": 5,
     "bounce": "simple"
   },
   "003": {
@@ -119,7 +119,7 @@
     "blocker": true,
     "avatar": "skull-img",
     "direction": "SE",
-    "speed": 3,
+    "speed": 4,
     "bounce": "simple"
   },
   "004": {
@@ -127,7 +127,7 @@
     "blocker": true,
     "avatar": "slug-img",
     "direction": "NW",
-    "speed": 4,
+    "speed": 5,
     "bounce": "simple"
   },
   "005": {
@@ -135,7 +135,7 @@
     "blocker": true,
     "avatar": "werewolf-img",
     "direction": "E",
-    "speed": 5,
+    "speed": 6,
     "bounce": "simple"
   }
 }

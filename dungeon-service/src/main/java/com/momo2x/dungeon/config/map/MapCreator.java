@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.momo2x.dungeon.engine.actors.ElementType.WALKER;
@@ -54,10 +55,7 @@ public class MapCreator {
             for (final var coord : elementCoords.getValue()) {
                 final var layerIndex = this.mapMetadata.elementsLayers().get(elementId);
                 final var element = this.createElement(elementId, catalogueItem, layerIndex);
-                final var cell = new DungeonCell(coord, element);
-
-                element.setCell(cell);
-                map.put(coord, cell);
+                final var cell = this.getOrCreateCellAndAddElement(map, coord, element);
 
                 if (element instanceof final DungeonWalker walker) {
                     if (walkers.containsKey(elementId)) {
@@ -102,6 +100,47 @@ public class MapCreator {
         }
 
         return new DungeonElement(id, item.avatar(), item.blocker(), mapLayer);
+    }
+
+    private DungeonCell getOrCreateCellAndAddElement(ConcurrentHashMap<DungeonCoord, DungeonCell> map, DungeonCoord coord, DungeonElement element) throws MalformedCellException, MalformedElementException {
+        var cell = map.get(coord);
+
+        if (Objects.isNull(cell)) {
+            cell = new DungeonCell(coord, element);
+            element.setCell(cell);
+
+            return map.put(coord, cell);
+        }
+
+        final var elementInCell = cell.removeTopElement();
+
+        if (Objects.isNull(elementInCell)) {
+            throw new MalformedCellException(
+                    "Cell %s was created with no element in it. There can be no empty cell in the map");
+        }
+
+        if (element.getLayerIndex() == elementInCell.getLayerIndex()) {
+            throw new MalformedElementException(
+                    "Two elements cannot be on the same layer in the same cell. " +
+                            "Elements %s and %s in cel %s have the layer index %d".formatted(
+                                    elementInCell.getId(),
+                                    element.getId(),
+                                    cell,
+                                    element.getLayerIndex()));
+        }
+
+        if (element.getLayerIndex() < elementInCell.getLayerIndex()) {
+            cell.addElementToTop(element);
+            cell.addElementToTop(elementInCell);
+
+        } else {
+            cell.addElementToTop(elementInCell);
+            cell.addElementToTop(element);
+        }
+
+        element.setCell(cell);
+
+        return cell;
     }
 
 }

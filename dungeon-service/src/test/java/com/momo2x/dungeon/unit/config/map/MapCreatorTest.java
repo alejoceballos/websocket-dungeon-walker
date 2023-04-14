@@ -3,6 +3,7 @@ package com.momo2x.dungeon.unit.config.map;
 import com.momo2x.dungeon.config.map.MalformedCatalogueException;
 import com.momo2x.dungeon.config.map.MalformedMapException;
 import com.momo2x.dungeon.config.map.MapCreator;
+import com.momo2x.dungeon.engine.map.DungeonCoord;
 import org.junit.jupiter.api.Test;
 
 import static com.momo2x.dungeon.unit.MapTestUtil.mockMapCells;
@@ -21,6 +22,7 @@ class MapCreatorTest {
 
         assertThat(dungeonMap.getWidth(), equalTo(6));
         assertThat(dungeonMap.getHeight(), equalTo(5));
+        assertThat(dungeonMap.getNumOfLayers(), equalTo(3));
 
         assertThat(dungeonMap.getWalkers().size(), equalTo(1));
         assertThat(
@@ -31,6 +33,12 @@ class MapCreatorTest {
         assertThat(
                 dungeonMap.getMap().entrySet(),
                 containsInAnyOrder(mockMapCells.get().entrySet().toArray()));
+
+        final var walkerOnGrassCell = dungeonMap.getMap().get(new DungeonCoord(2, 2));
+
+        assertThat(walkerOnGrassCell.getTopElement().getId(), equalTo("001"));
+        walkerOnGrassCell.removeTopElement();
+        assertThat(walkerOnGrassCell.getTopElement().getId(), equalTo("G01"));
     }
 
 }

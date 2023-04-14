@@ -40,8 +40,8 @@ public class DungeonCell {
         this.elements.push(element);
     }
 
-    public void removeTopElement() {
-        this.elements.pop();
+    public DungeonElement removeTopElement() {
+        return this.elements.pop();
     }
 
     public boolean isBlocked() {
