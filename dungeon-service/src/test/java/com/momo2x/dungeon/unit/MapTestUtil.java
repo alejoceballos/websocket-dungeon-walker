@@ -222,7 +222,7 @@ public class MapTestUtil {
 
         dungeonAutoWalkerElement.setCell(dungeonAutoWalkerCell);
 
-        return new DungeonMap(6, 5, mockRawMaps.get().size(), mapCellsMock, mapWalkersMock);
+        return new DungeonMap(6, 5, mockRawMaps.get().size() + 1, mapCellsMock, mapWalkersMock);
     };
     public static final Supplier<Map<String, DungeonWalker>> mockMapWalkers = () -> {
         final var dungeonAutoWalkerMock = mockDungeonAutoWalker.get();

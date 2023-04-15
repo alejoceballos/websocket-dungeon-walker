@@ -288,7 +288,8 @@ table.arrow-table--grid td {
 }
 
 table.table--grid th,
-table.table--grid td {
+table.table--grid td,
+table.table--grid div {
     width: 32px;
     height: 32px;
 }

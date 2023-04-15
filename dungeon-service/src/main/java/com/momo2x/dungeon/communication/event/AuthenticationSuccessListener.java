@@ -31,7 +31,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
                     user,
                     "%s-img".formatted(user),
                     true,
-                    this.map.getNumOfLayers(),
+                    this.map.getNumOfLayers() - 1,
                     E);
 
             this.map.placeElement(

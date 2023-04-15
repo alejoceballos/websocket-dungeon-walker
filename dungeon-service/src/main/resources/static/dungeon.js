@@ -89,7 +89,7 @@ const setKeyPressEvents = () => {
 };
 
 const createDungeon = dungeonMap => {
-    const {width, height, elements} = dungeonMap;
+    const {width, height, numOfLayers, elements} = dungeonMap;
 
     for (let idx = 0; idx < width; idx++) {
         $("#dungeon-header>tr").append(`<th>${idx}</th>`);
@@ -105,15 +105,22 @@ const createDungeon = dungeonMap => {
         tr.append(`<td>${y}</td>`);
 
         for (let x = 0; x < width; x++) {
-            tr.append(`<td id='${getTdId(x, y)}'></td>`);
-        }
+            let currId = `${getTdId(x, y, 0)}`;
+            tr.append(`<td id=${currId}></td>`);
 
-        for (const element of elements) {
-            const {avatar, coord} = element;
-            const {x, y} = coord;
-
-            $(`#${getTdId(x, y)}`).addClass(avatar);
+            for (let layerIdx = 1; layerIdx < numOfLayers; layerIdx++) {
+                let currTag = $(`#${currId}`);
+                currId = getTdId(x, y, layerIdx);
+                currTag.append(`<div id='${currId}'></div>`);
+            }
         }
+    }
+
+    for (const element of elements) {
+        const {avatar, coord, layerIndex: layer} = element;
+        const {x, y} = coord;
+
+        $(`#${getTdId(x, y, layer)}`).addClass(avatar);
     }
 };
 
@@ -129,19 +136,18 @@ const webSocketConnect = socket => {
 };
 
 const reRender = mapUpdate => {
-    const {id: walkerId, avatar: walkerAvatar, coord: walkerCoord} = mapUpdate.elements[0];
+    const {id: walkerId, avatar: walkerAvatar, coord: walkerCoord, layerIndex: walkerLayer} = mapUpdate.elements[0];
 
-    const currentId = getTdId(walkerCoord.x, walkerCoord.y)
+    const currentId = getTdId(walkerCoord.x, walkerCoord.y, walkerLayer)
 
     let prevElemCoord = walkerCoord;
 
     if (mapUpdate.elements.length > 1) {
-        const {avatar: prevElemAvatar, coord: prevElemCoord} = mapUpdate.elements[1];
-        const previousId = getTdId(prevElemCoord.x, prevElemCoord.y)
+        const {coord: prevElemCoord} = mapUpdate.elements[1];
+        const previousId = getTdId(prevElemCoord.x, prevElemCoord.y, walkerLayer)
         const previousElement = $(`#${previousId}`);
 
         previousElement.removeClass();
-        previousElement.addClass(prevElemAvatar);
     }
 
     const avatarClass = `${walkerAvatar}-${calculateDirection(prevElemCoord, walkerCoord)}`;
@@ -159,7 +165,10 @@ const reRender = mapUpdate => {
     setMessage(`[${walkerId}] From (${prevElemCoord.x},${prevElemCoord.y}) to (${walkerCoord.x},${walkerCoord.y})`);
 };
 
-const getTdId = (x, y) => `coord-${x}-${y}`;
+const getTdId = (x, y, layer) => {
+    const lyr = layer !== undefined ? `-${layer}` : '';
+    return `coord-${x}-${y}${lyr}`
+};
 
 const setMessage = msg => $("#p-message").text(msg);
 

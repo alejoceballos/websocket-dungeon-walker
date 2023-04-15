@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.Optional.ofNullable;
-
 @Mapper(componentModel = "spring")
 public interface MapMapper {
 
@@ -20,15 +18,14 @@ public interface MapMapper {
     static Set<ElementDto> mapToElements(Map<DungeonCoord, DungeonCell> map) {
         final var elements = new HashSet<ElementDto>();
 
-        for (var mapEntry : map.entrySet()) {
-            ofNullable(mapEntry.getValue().getTopElement())
-                    .ifPresent(elem ->
-                            elements.add(
-                                    new ElementDto(
-                                            elem.getId(),
-                                            elem.getAvatar(),
-                                            new CoordinateDto(mapEntry.getKey().x(), mapEntry.getKey().y()),
-                                            elem.getLayerIndex())));
+        for (var cellByCoord : map.entrySet()) {
+            cellByCoord.getValue().getElements().forEach(elem ->
+                    elements.add(
+                            new ElementDto(
+                                    elem.getId(),
+                                    elem.getAvatar(),
+                                    new CoordinateDto(cellByCoord.getKey().x(), cellByCoord.getKey().y()),
+                                    elem.getLayerIndex())));
         }
 
         return elements;

@@ -16,6 +16,7 @@ public class DungeonCell {
     @Getter
     private final DungeonCoord coord;
 
+    @Getter
     private final Stack<DungeonElement> elements = new Stack<>();
 
     public DungeonCell(DungeonCoord coord) {

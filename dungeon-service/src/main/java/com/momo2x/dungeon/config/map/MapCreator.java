@@ -75,7 +75,7 @@ public class MapCreator {
             }
         }
 
-        return new DungeonMap(maxX + 1, maxY + 1, maxLayerIndex + 1, map, walkers);
+        return new DungeonMap(maxX + 1, maxY + 1, maxLayerIndex + 2, map, walkers);
     }
 
     private DungeonElement createElement(
