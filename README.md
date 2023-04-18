@@ -9,7 +9,7 @@ Currently, it's just a dream 💭.
 
 ## Current state
 
-<img src="README.files/v0.0.8-preview.gif" title="Version 0.0.8 Preview" alt="Version 0.0.8 Preview" height="50%" width="50%">
+<img src="README.files/v0.0.9-preview.gif" title="Version 0.0.9 Preview" alt="Version 0.0.9 Preview" height="50%" width="50%">
 
 ## 🙂 Motivation
 
@@ -45,7 +45,14 @@ mvn spring-boot:run
 
 ## 📈 Versions
 
-#### Version 0.0.8
+#### Version 0.0.9
+
+Now walking avatars go over grass and sand and the terrain can be seen as part of the character's background instead of
+a white one. After some refactoring to prepare the map and elements to be able to work in multiple layers (and lots of
+code refactoring), the bug was fixed (when moving, some images were creating frozen copies of themselves). Some tests
+need improvement though, like if the map controller is returning all elements as expected in the list.
+
+#### Version 0.0.8 ([3458ea1](https://github.com/alejoceballos/websocket-dungeon-walker/commit/3458ea16e52e627f523cda05e37d4aa9734c4db1))
 
 Now the map allows background images.
 
@@ -63,6 +70,8 @@ the map layer).
 There are still some bugs regarding rendering again the layer when a walker step out of it, but it may be fixed in the
 future. In the future, the visibility priority will be set according to the layer the element is placed. Player
 characters should have set the highest priority. This way there will be possible to overlay elements in the map.
+
+<img src="README.files/v0.0.8-preview.gif" title="Version 0.0.8 Preview" alt="Version 0.0.8 Preview" height="50%" width="50%">
 
 #### Version 0.0.7 ([a8dfaef](https://github.com/alejoceballos/websocket-dungeon-walker/commit/a8dfaef749b5c8a1b1ee52aaddfc87010b71157c))
 
