@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static com.momo2x.dungeon.engine.movement.BounceStrategyType.SIMPLE;
+import static com.momo2x.dungeon.engine.interaction.bounce.BounceStrategyType.SIMPLE;
 import static com.momo2x.dungeon.engine.movement.DirectionType.NE;
 
 public class MapTestUtil {

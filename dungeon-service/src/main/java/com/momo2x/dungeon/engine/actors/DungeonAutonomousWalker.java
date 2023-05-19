@@ -1,6 +1,6 @@
 package com.momo2x.dungeon.engine.actors;
 
-import com.momo2x.dungeon.engine.movement.BounceStrategyType;
+import com.momo2x.dungeon.engine.interaction.bounce.BounceStrategyType;
 import com.momo2x.dungeon.engine.movement.DirectionType;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

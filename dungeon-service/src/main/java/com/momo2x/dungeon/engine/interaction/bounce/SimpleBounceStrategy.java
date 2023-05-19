@@ -1,7 +1,8 @@
-package com.momo2x.dungeon.engine.movement;
+package com.momo2x.dungeon.engine.interaction.bounce;
 
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
 import com.momo2x.dungeon.engine.map.DungeonMap;
+import com.momo2x.dungeon.engine.movement.DirectionType;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

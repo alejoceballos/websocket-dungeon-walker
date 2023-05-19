@@ -2,6 +2,7 @@ package com.momo2x.dungeon.engine.movement;
 
 import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
+import com.momo2x.dungeon.engine.interaction.bounce.BounceStrategy;
 import com.momo2x.dungeon.engine.map.CellException;
 import com.momo2x.dungeon.engine.map.DungeonMap;
 import lombok.Getter;

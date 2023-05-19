@@ -1,13 +1,13 @@
-package com.momo2x.dungeon.unit.engine.movement;
+package com.momo2x.dungeon.unit.engine.interaction.bounce;
 
 import com.momo2x.dungeon.engine.actors.DungeonElement;
 import com.momo2x.dungeon.engine.actors.DungeonWalker;
+import com.momo2x.dungeon.engine.interaction.bounce.BounceStrategy;
+import com.momo2x.dungeon.engine.interaction.bounce.SimpleBounceStrategy;
 import com.momo2x.dungeon.engine.map.DungeonCell;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.map.DungeonMap;
-import com.momo2x.dungeon.engine.movement.BounceStrategy;
 import com.momo2x.dungeon.engine.movement.DirectionType;
-import com.momo2x.dungeon.engine.movement.SimpleBounceStrategy;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

@@ -1,11 +1,11 @@
 package com.momo2x.dungeon.unit.engine.movement;
 
 import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
+import com.momo2x.dungeon.engine.interaction.bounce.SimpleBounceStrategy;
 import com.momo2x.dungeon.engine.map.CellException;
 import com.momo2x.dungeon.engine.map.DungeonCoord;
 import com.momo2x.dungeon.engine.movement.MovementException;
 import com.momo2x.dungeon.engine.movement.MovementManager;
-import com.momo2x.dungeon.engine.movement.SimpleBounceStrategy;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -2,11 +2,11 @@ package com.momo2x.dungeon.engine;
 
 import com.momo2x.dungeon.communication.controller.out.DungeonUpdater;
 import com.momo2x.dungeon.engine.actors.DungeonAutonomousWalker;
+import com.momo2x.dungeon.engine.interaction.bounce.BounceException;
+import com.momo2x.dungeon.engine.interaction.bounce.BounceStrategy;
+import com.momo2x.dungeon.engine.interaction.bounce.SimpleBounceStrategy;
 import com.momo2x.dungeon.engine.map.DungeonMap;
-import com.momo2x.dungeon.engine.movement.BounceException;
-import com.momo2x.dungeon.engine.movement.BounceStrategy;
 import com.momo2x.dungeon.engine.movement.MovementManager;
-import com.momo2x.dungeon.engine.movement.SimpleBounceStrategy;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-import static com.momo2x.dungeon.engine.movement.BounceStrategyType.SIMPLE;
+import static com.momo2x.dungeon.engine.interaction.bounce.BounceStrategyType.SIMPLE;
 
 @Slf4j
 @Component
